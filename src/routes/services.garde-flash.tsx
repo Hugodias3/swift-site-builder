@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
+import { NanniesMap } from "@/components/NanniesMap";
 
 export const Route = createFileRoute("/services/garde-flash")({
   component: GardeFlash,
@@ -80,6 +81,8 @@ function GardeFlash() {
         },
       ]}
       next={{ label: "BATIDIAS — Devis travaux", to: "/services/batidias" }}
-    />
+    >
+      <NanniesMap />
+    </ServicePage>
   );
 }
