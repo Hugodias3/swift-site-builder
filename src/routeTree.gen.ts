@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesTournoiMensuelRouteImport } from './routes/services.tournoi-mensuel'
 import { Route as ServicesTirageParrainageRouteImport } from './routes/services.tirage-parrainage'
@@ -39,10 +42,32 @@ import { Route as ServicesBarbiersRouteImport } from './routes/services.barbiers
 import { Route as ServicesAutoMotoRouteImport } from './routes/services.auto-moto'
 import { Route as ServicesArtsMartiauxRouteImport } from './routes/services.arts-martiaux'
 import { Route as ServicesAideDevoirsRouteImport } from './routes/services.aide-devoirs'
+import { Route as AuthenticatedSocialRouteImport } from './routes/_authenticated/social'
+import { Route as AuthenticatedSocialIndexRouteImport } from './routes/_authenticated/social.index'
+import { Route as AuthenticatedSocialMessagesRouteImport } from './routes/_authenticated/social.messages'
+import { Route as AuthenticatedSocialMeRouteImport } from './routes/_authenticated/social.me'
+import { Route as AuthenticatedSocialGroupesRouteImport } from './routes/_authenticated/social.groupes'
+import { Route as AuthenticatedSocialExplorerRouteImport } from './routes/_authenticated/social.explorer'
+import { Route as AuthenticatedSocialUUsernameRouteImport } from './routes/_authenticated/social.u.$username'
+import { Route as AuthenticatedSocialTagHashtagRouteImport } from './routes/_authenticated/social.tag.$hashtag'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -192,10 +217,59 @@ const ServicesAideDevoirsRoute = ServicesAideDevoirsRouteImport.update({
   path: '/aide-devoirs',
   getParentRoute: () => ServicesRoute,
 } as any)
+const AuthenticatedSocialRoute = AuthenticatedSocialRouteImport.update({
+  id: '/social',
+  path: '/social',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSocialIndexRoute =
+  AuthenticatedSocialIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
+const AuthenticatedSocialMessagesRoute =
+  AuthenticatedSocialMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
+const AuthenticatedSocialMeRoute = AuthenticatedSocialMeRouteImport.update({
+  id: '/me',
+  path: '/me',
+  getParentRoute: () => AuthenticatedSocialRoute,
+} as any)
+const AuthenticatedSocialGroupesRoute =
+  AuthenticatedSocialGroupesRouteImport.update({
+    id: '/groupes',
+    path: '/groupes',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
+const AuthenticatedSocialExplorerRoute =
+  AuthenticatedSocialExplorerRouteImport.update({
+    id: '/explorer',
+    path: '/explorer',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
+const AuthenticatedSocialUUsernameRoute =
+  AuthenticatedSocialUUsernameRouteImport.update({
+    id: '/u/$username',
+    path: '/u/$username',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
+const AuthenticatedSocialTagHashtagRoute =
+  AuthenticatedSocialTagHashtagRouteImport.update({
+    id: '/tag/$hashtag',
+    path: '/tag/$hashtag',
+    getParentRoute: () => AuthenticatedSocialRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
+  '/social': typeof AuthenticatedSocialRouteWithChildren
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
   '/services/auto-moto': typeof ServicesAutoMotoRoute
@@ -224,9 +298,18 @@ export interface FileRoutesByFullPath {
   '/services/stand-tir': typeof ServicesStandTirRoute
   '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
   '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
+  '/social/explorer': typeof AuthenticatedSocialExplorerRoute
+  '/social/groupes': typeof AuthenticatedSocialGroupesRoute
+  '/social/me': typeof AuthenticatedSocialMeRoute
+  '/social/messages': typeof AuthenticatedSocialMessagesRoute
+  '/social/': typeof AuthenticatedSocialIndexRoute
+  '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
+  '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
@@ -256,11 +339,22 @@ export interface FileRoutesByTo {
   '/services/stand-tir': typeof ServicesStandTirRoute
   '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
   '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
+  '/social/explorer': typeof AuthenticatedSocialExplorerRoute
+  '/social/groupes': typeof AuthenticatedSocialGroupesRoute
+  '/social/me': typeof AuthenticatedSocialMeRoute
+  '/social/messages': typeof AuthenticatedSocialMessagesRoute
+  '/social': typeof AuthenticatedSocialIndexRoute
+  '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
+  '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
+  '/_authenticated/social': typeof AuthenticatedSocialRouteWithChildren
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
   '/services/auto-moto': typeof ServicesAutoMotoRoute
@@ -289,12 +383,22 @@ export interface FileRoutesById {
   '/services/stand-tir': typeof ServicesStandTirRoute
   '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
   '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
+  '/_authenticated/social/explorer': typeof AuthenticatedSocialExplorerRoute
+  '/_authenticated/social/groupes': typeof AuthenticatedSocialGroupesRoute
+  '/_authenticated/social/me': typeof AuthenticatedSocialMeRoute
+  '/_authenticated/social/messages': typeof AuthenticatedSocialMessagesRoute
+  '/_authenticated/social/': typeof AuthenticatedSocialIndexRoute
+  '/_authenticated/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
+  '/_authenticated/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
+    | '/reset-password'
     | '/services'
+    | '/social'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
     | '/services/auto-moto'
@@ -323,9 +427,18 @@ export interface FileRouteTypes {
     | '/services/stand-tir'
     | '/services/tirage-parrainage'
     | '/services/tournoi-mensuel'
+    | '/social/explorer'
+    | '/social/groupes'
+    | '/social/me'
+    | '/social/messages'
+    | '/social/'
+    | '/social/tag/$hashtag'
+    | '/social/u/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
+    | '/reset-password'
     | '/services'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
@@ -355,10 +468,21 @@ export interface FileRouteTypes {
     | '/services/stand-tir'
     | '/services/tirage-parrainage'
     | '/services/tournoi-mensuel'
+    | '/social/explorer'
+    | '/social/groupes'
+    | '/social/me'
+    | '/social/messages'
+    | '/social'
+    | '/social/tag/$hashtag'
+    | '/social/u/$username'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
     | '/services'
+    | '/_authenticated/social'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
     | '/services/auto-moto'
@@ -387,10 +511,20 @@ export interface FileRouteTypes {
     | '/services/stand-tir'
     | '/services/tirage-parrainage'
     | '/services/tournoi-mensuel'
+    | '/_authenticated/social/explorer'
+    | '/_authenticated/social/groupes'
+    | '/_authenticated/social/me'
+    | '/_authenticated/social/messages'
+    | '/_authenticated/social/'
+    | '/_authenticated/social/tag/$hashtag'
+    | '/_authenticated/social/u/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRouteWithChildren
 }
 
@@ -401,6 +535,27 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -606,8 +761,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesAideDevoirsRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/_authenticated/social': {
+      id: '/_authenticated/social'
+      path: '/social'
+      fullPath: '/social'
+      preLoaderRoute: typeof AuthenticatedSocialRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/social/': {
+      id: '/_authenticated/social/'
+      path: '/'
+      fullPath: '/social/'
+      preLoaderRoute: typeof AuthenticatedSocialIndexRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/messages': {
+      id: '/_authenticated/social/messages'
+      path: '/messages'
+      fullPath: '/social/messages'
+      preLoaderRoute: typeof AuthenticatedSocialMessagesRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/me': {
+      id: '/_authenticated/social/me'
+      path: '/me'
+      fullPath: '/social/me'
+      preLoaderRoute: typeof AuthenticatedSocialMeRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/groupes': {
+      id: '/_authenticated/social/groupes'
+      path: '/groupes'
+      fullPath: '/social/groupes'
+      preLoaderRoute: typeof AuthenticatedSocialGroupesRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/explorer': {
+      id: '/_authenticated/social/explorer'
+      path: '/explorer'
+      fullPath: '/social/explorer'
+      preLoaderRoute: typeof AuthenticatedSocialExplorerRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/u/$username': {
+      id: '/_authenticated/social/u/$username'
+      path: '/u/$username'
+      fullPath: '/social/u/$username'
+      preLoaderRoute: typeof AuthenticatedSocialUUsernameRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
+    '/_authenticated/social/tag/$hashtag': {
+      id: '/_authenticated/social/tag/$hashtag'
+      path: '/tag/$hashtag'
+      fullPath: '/social/tag/$hashtag'
+      preLoaderRoute: typeof AuthenticatedSocialTagHashtagRouteImport
+      parentRoute: typeof AuthenticatedSocialRoute
+    }
   }
 }
+
+interface AuthenticatedSocialRouteChildren {
+  AuthenticatedSocialExplorerRoute: typeof AuthenticatedSocialExplorerRoute
+  AuthenticatedSocialGroupesRoute: typeof AuthenticatedSocialGroupesRoute
+  AuthenticatedSocialMeRoute: typeof AuthenticatedSocialMeRoute
+  AuthenticatedSocialMessagesRoute: typeof AuthenticatedSocialMessagesRoute
+  AuthenticatedSocialIndexRoute: typeof AuthenticatedSocialIndexRoute
+  AuthenticatedSocialTagHashtagRoute: typeof AuthenticatedSocialTagHashtagRoute
+  AuthenticatedSocialUUsernameRoute: typeof AuthenticatedSocialUUsernameRoute
+}
+
+const AuthenticatedSocialRouteChildren: AuthenticatedSocialRouteChildren = {
+  AuthenticatedSocialExplorerRoute: AuthenticatedSocialExplorerRoute,
+  AuthenticatedSocialGroupesRoute: AuthenticatedSocialGroupesRoute,
+  AuthenticatedSocialMeRoute: AuthenticatedSocialMeRoute,
+  AuthenticatedSocialMessagesRoute: AuthenticatedSocialMessagesRoute,
+  AuthenticatedSocialIndexRoute: AuthenticatedSocialIndexRoute,
+  AuthenticatedSocialTagHashtagRoute: AuthenticatedSocialTagHashtagRoute,
+  AuthenticatedSocialUUsernameRoute: AuthenticatedSocialUUsernameRoute,
+}
+
+const AuthenticatedSocialRouteWithChildren =
+  AuthenticatedSocialRoute._addFileChildren(AuthenticatedSocialRouteChildren)
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedSocialRoute: typeof AuthenticatedSocialRouteWithChildren
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedSocialRoute: AuthenticatedSocialRouteWithChildren,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 interface ServicesRouteChildren {
   ServicesAideDevoirsRoute: typeof ServicesAideDevoirsRoute
@@ -677,6 +923,9 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
