@@ -73,6 +73,7 @@ function SuiviPage() {
 
   return (
     <main className="fixed inset-0 overflow-hidden font-body" style={{ background: "#07080A", color: "#EDF0F5" }}>
+      <NotifHost />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap');
         .font-display { font-family: 'Syne', sans-serif; }
