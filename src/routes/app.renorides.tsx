@@ -349,7 +349,6 @@ function RenoRidesApp() {
     {!selected && <BottomNav />}
     <NonMemberModal open={showAccess} onClose={() => setShowAccess(false)} />
     </>
-    </>
   );
 }
 
