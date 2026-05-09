@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import {
   CheckCircle2,
@@ -584,7 +584,7 @@ function Process() {
               {i < steps.length - 1 && (
                 <ArrowRight key={`arrow-${i}`} size={32} style={{ color: C.rust, opacity: 0.6 }} />
               )}
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
