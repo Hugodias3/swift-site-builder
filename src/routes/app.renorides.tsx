@@ -40,6 +40,7 @@ function RenoRidesApp() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const dragRef = useRef<{ startY: number; startExpanded: boolean } | null>(null);
+  const lastMarkerClickAt = useRef<number>(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [showAccess, setShowAccess] = useState(false);
   const [accessGranted, setAccessGranted] = useState(() => {
