@@ -56,7 +56,7 @@ export function NotifHost() {
         @keyframes notif-ring { 0% { box-shadow: 0 0 0 0 var(--ring); } 100% { box-shadow: 0 0 0 16px transparent; } }
       `}</style>
       <div
-        className="fixed inset-x-0 z-[1000] flex flex-col items-center gap-2 px-3 pointer-events-none"
+        className="fixed inset-x-0 z-[3000] flex flex-col items-center gap-2 px-3 pointer-events-none"
         style={{ top: "max(env(safe-area-inset-top), 8px)" }}
       >
         {items.map((n) => {

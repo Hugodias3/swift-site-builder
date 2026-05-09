@@ -4,7 +4,7 @@ export function NonMemberModal({ open, onClose, onGrant }: { open: boolean; onCl
   if (!open) return null;
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      className="fixed inset-0 z-[2000] flex items-center justify-center px-4"
       style={{ background: "rgba(7,8,10,0.78)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", fontFamily: "'DM Sans', sans-serif" }}
       onClick={onClose}
     >
