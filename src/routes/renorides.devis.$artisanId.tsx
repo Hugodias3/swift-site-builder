@@ -53,7 +53,7 @@ function DevisPage() {
     e.preventDefault();
     setSubmitting(true);
     setTimeout(() => {
-      navigate({ to: "/renorides/devis/$artisanId/attente", params: { artisanId } });
+      navigate({ to: "/renorides/attente/$id", params: { id: artisanId } });
     }, 1100);
   };
 
