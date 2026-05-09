@@ -24,7 +24,10 @@ function PaiementPage() {
 
   const pay = () => {
     setStep("loading");
-    setTimeout(() => setStep("done"), 2000);
+    setTimeout(() => {
+      setStep("done");
+      notify("paid", "Paiement confirmé", "105€ débités. Facture envoyée par email.");
+    }, 2000);
   };
 
   return (
