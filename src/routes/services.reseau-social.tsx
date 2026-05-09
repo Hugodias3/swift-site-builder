@@ -14,7 +14,7 @@ export const Route = createFileRoute("/services/reseau-social")({
         { value: "100%", label: "Modération humaine" },
         { value: "FR", label: "Hébergement" },
       ]}
-      cta={{ primary: "Accès prioritaire", secondary: "Tous les services" }}
+      cta={{ primary: "Entrer dans le réseau", secondary: "Tous les services" }}
       howItWorks={[
         { step: "01", title: "Tu rejoins", text: "Profil père vérifié. Ville, âge des enfants, centres d'intérêt." },
         { step: "02", title: "Tu suis ton fil", text: "Personnalisé selon ta vie de père. Pas un défilé sans fin." },
