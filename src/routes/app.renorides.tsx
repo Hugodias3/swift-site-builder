@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { X } from "lucide-react";
 
 export const Route = createFileRoute("/app/renorides")({
   component: RenoRidesApp,
@@ -158,6 +159,8 @@ function RenoRidesApp() {
               if (Date.now() - lastMarkerClickAt.current < 350) return;
               setSelectedId(null); setExpanded(false);
             }} useMapEvents={Map.useMapEvents} />
+            <MapGestureLock locked={!!selectedId} useMap={Map.useMap} />
+
           </Map.MapContainer>
         )}
         {!Map && (
@@ -327,32 +330,49 @@ function RenoRidesApp() {
         </div>
       )}
 
-      {/* BOTTOM SHEET */}
+      {/* BACKDROP + BOTTOM SHEET */}
       {selected && (
-        <BottomSheet
-          artisan={selected}
-          expanded={expanded}
-          dragOffset={dragOffset}
-          onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
-          onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
-          onDragMove={(y) => {
-            if (!dragRef.current) return;
-            setDragOffset(y - dragRef.current.startY);
-          }}
-          onDragEnd={() => {
-            const o = dragOffset;
-            const startExp = dragRef.current?.startExpanded ?? false;
-            dragRef.current = null;
-            setDragOffset(0);
-            if (startExp) {
-              if (o > 320) { setSelectedId(null); setExpanded(false); }
-              else if (o > 120) setExpanded(false);
-            } else {
-              if (o < -80) setExpanded(true);
-              else if (o > 120) { setSelectedId(null); setExpanded(false); }
-            }
-          }}
-        />
+        <>
+          <div
+            onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1150,
+              background: "rgba(7,8,10,0.55)",
+              backdropFilter: "blur(2px)",
+              WebkitBackdropFilter: "blur(2px)",
+              animation: "backdrop-in 0.25s ease-out",
+            }}
+          />
+          <style>{`@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }`}</style>
+          <BottomSheet
+            artisan={selected}
+            expanded={expanded}
+            dragOffset={dragOffset}
+            onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+            onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
+            onDragMove={(y) => {
+              if (!dragRef.current) return;
+              const dy = y - dragRef.current.startY;
+              // Block upward drag past expand; allow downward freely
+              setDragOffset(dragRef.current.startExpanded ? Math.max(0, dy) : dy);
+            }}
+            onDragEnd={() => {
+              const o = dragOffset;
+              const startExp = dragRef.current?.startExpanded ?? false;
+              dragRef.current = null;
+              setDragOffset(0);
+              if (startExp) {
+                if (o > 240) { setSelectedId(null); setExpanded(false); }
+                else if (o > 100) setExpanded(false);
+              } else {
+                if (o < -80) setExpanded(true);
+                else if (o > 100) { setSelectedId(null); setExpanded(false); }
+              }
+            }}
+          />
+        </>
       )}
     </main>
     {!selected && <BottomNav />}
@@ -370,6 +390,29 @@ function RenoRidesApp() {
 
 function MapClickCloser({ onClick, useMapEvents }: { onClick: () => void; useMapEvents: any }) {
   useMapEvents({ click: onClick });
+  return null;
+}
+
+function MapGestureLock({ locked, useMap }: { locked: boolean; useMap: any }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!map) return;
+    if (locked) {
+      map.dragging?.disable();
+      map.scrollWheelZoom?.disable();
+      map.doubleClickZoom?.disable();
+      map.touchZoom?.disable();
+      map.boxZoom?.disable();
+      map.keyboard?.disable();
+    } else {
+      map.dragging?.enable();
+      map.scrollWheelZoom?.enable();
+      map.doubleClickZoom?.enable();
+      map.touchZoom?.enable();
+      map.boxZoom?.enable();
+      map.keyboard?.enable();
+    }
+  }, [map, locked]);
   return null;
 }
 
@@ -416,6 +459,17 @@ function BottomSheet({
     >
       <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
 
+        {/* Close button top-right */}
+        <button
+          onClick={onClose}
+          aria-label="Fermer"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center active:scale-95 transition"
+          style={{ background: "rgba(255,255,255,0.08)", color: "#EDF0F5", zIndex: 2 }}
+        >
+          <X size={18} strokeWidth={2.4} />
+        </button>
+
+        {/* Drag handle */}
         <div
           className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
           onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture(e.pointerId); onDragStart(e.clientY); }}
@@ -423,11 +477,14 @@ function BottomSheet({
           onPointerUp={onDragEnd}
           onPointerCancel={onDragEnd}
         >
-          <div className="w-10 h-1 rounded-full" style={{ background: "rgba(237,240,245,0.25)" }} />
+          <div className="w-12 h-1.5 rounded-full" style={{ background: "rgba(237,240,245,0.3)" }} />
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 20px)" }}>
-          <div className="flex items-center gap-3">
+        <div
+          className="flex-1 overflow-y-auto px-5 pb-5"
+          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 28px)", overscrollBehavior: "contain" }}
+        >
+          <div className="flex items-center gap-3 pr-12">
             <div
               className="rounded-full flex items-center justify-center font-display font-extrabold shrink-0"
               style={{ width: 52, height: 52, background: "linear-gradient(135deg, #C8521A, #8B3A12)", color: "#FFF", fontSize: 18 }}
@@ -443,14 +500,6 @@ function BottomSheet({
                 ⭐ {artisan.rating.toFixed(1)} <span style={{ color: "rgba(237,240,245,0.55)" }}>({artisan.jobs} interventions)</span>
               </div>
             </div>
-            <button
-              onClick={onClose}
-              aria-label="Fermer"
-              className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 active:scale-95 transition"
-              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(237,240,245,0.7)" }}
-            >
-              ✕
-            </button>
           </div>
 
           <div className="mt-4 flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
