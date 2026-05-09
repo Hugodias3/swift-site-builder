@@ -64,6 +64,7 @@ function RenoRidesApp() {
   });
 
   return (
+    <>
     <main
       className="fixed inset-0 overflow-hidden font-body"
       style={{ background: "#07080A", color: "#EDF0F5" }}
