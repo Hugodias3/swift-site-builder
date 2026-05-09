@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ARTISANS } from "@/data/renorides-artisans";
+import { NotifHost, notify } from "@/components/renorides/NotifToast";
 
 export const Route = createFileRoute("/renorides/paiement/$id")({
   component: PaiementPage,
