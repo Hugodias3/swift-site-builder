@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ARTISANS } from "@/data/renorides-artisans";
+import { NotifHost, notify } from "@/components/renorides/NotifToast";
 
 export const Route = createFileRoute("/renorides/paiement/$id")({
   component: PaiementPage,
@@ -23,11 +24,15 @@ function PaiementPage() {
 
   const pay = () => {
     setStep("loading");
-    setTimeout(() => setStep("done"), 2000);
+    setTimeout(() => {
+      setStep("done");
+      notify("paid", "Paiement confirmé", "105€ débités. Facture envoyée par email.");
+    }, 2000);
   };
 
   return (
     <main className="min-h-screen font-body" style={{ background: "#07080A", color: "#EDF0F5" }}>
+      <NotifHost />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap');
         .font-display { font-family: 'Syne', sans-serif; }

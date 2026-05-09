@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ARTISANS } from "@/data/renorides-artisans";
+import { NotifHost, notify } from "@/components/renorides/NotifToast";
 
 export const Route = createFileRoute("/renorides/suivi/$id")({
   component: SuiviPage,
@@ -36,17 +37,31 @@ function SuiviPage() {
     return () => { alive = false; };
   }, []);
 
+  const fired5 = useRef(false);
+  const firedArrived = useRef(false);
+
   useEffect(() => {
     const i = setInterval(() => {
       setProgress((p) => {
         const np = Math.min(1, p + 1 / 60); // arrives in ~60s for demo
-        if (np >= 1) setArrived(true);
+        if (np >= 1 && !firedArrived.current) {
+          firedArrived.current = true;
+          setArrived(true);
+          notify("arrived", `${artisan?.name ?? "Artisan"} est arrivé`, "Il vous attend devant la porte. Confirmez l'arrivée.");
+        }
         return np;
       });
-      setEta((e) => Math.max(0, +(e - 8 / 60).toFixed(1)));
+      setEta((e) => {
+        const ne = Math.max(0, +(e - 8 / 60).toFixed(1));
+        if (!fired5.current && e > 5 && ne <= 5) {
+          fired5.current = true;
+          notify("eta", `${artisan?.name ?? "Artisan"} arrive dans 5 min`, "Préparez-vous à l'accueillir devant chez vous.");
+        }
+        return ne;
+      });
     }, 1000);
     return () => clearInterval(i);
-  }, []);
+  }, [artisan?.name]);
 
   const start: [number, number] = artisan ? [artisan.lat, artisan.lng] : USER;
   const current: [number, number] = useMemo(
@@ -58,6 +73,7 @@ function SuiviPage() {
 
   return (
     <main className="fixed inset-0 overflow-hidden font-body" style={{ background: "#07080A", color: "#EDF0F5" }}>
+      <NotifHost />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap');
         .font-display { font-family: 'Syne', sans-serif; }
