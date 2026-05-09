@@ -224,7 +224,7 @@ function RenoRidesApp() {
         onClick={() => setUrgent(!urgent)}
         className="absolute z-20 right-4 rounded-full flex flex-col items-center justify-center font-display font-extrabold active:scale-95 transition"
         style={{
-          bottom: "calc(max(env(safe-area-inset-bottom), 12px) + 80px)",
+          bottom: "calc(max(env(safe-area-inset-bottom), 12px) + 152px)",
           width: 72,
           height: 72,
           background: urgent ? "#C8521A" : "#FF4F4F",
