@@ -394,6 +394,196 @@ function RenoRidesApp() {
           </div>
         </div>
       )}
+
+      {/* BOTTOM SHEET */}
+      {selected && (
+        <BottomSheet
+          artisan={selected}
+          expanded={expanded}
+          dragOffset={dragOffset}
+          onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+          onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
+          onDragMove={(y) => {
+            if (!dragRef.current) return;
+            setDragOffset(y - dragRef.current.startY);
+          }}
+          onDragEnd={() => {
+            const o = dragOffset;
+            const startExp = dragRef.current?.startExpanded ?? false;
+            dragRef.current = null;
+            setDragOffset(0);
+            if (startExp) {
+              if (o > 320) { setSelectedId(null); setExpanded(false); }
+              else if (o > 120) setExpanded(false);
+            } else {
+              if (o < -80) setExpanded(true);
+              else if (o > 120) { setSelectedId(null); setExpanded(false); }
+            }
+          }}
+        />
+      )}
     </main>
+  );
+}
+
+function MapClickCloser({ onClick, useMapEvents }: { onClick: () => void; useMapEvents: any }) {
+  useMapEvents({ click: onClick });
+  return null;
+}
+
+function BottomSheet({
+  artisan, expanded, dragOffset, onClose, onDragStart, onDragMove, onDragEnd,
+}: {
+  artisan: Artisan;
+  expanded: boolean;
+  dragOffset: number;
+  onClose: () => void;
+  onDragStart: (y: number) => void;
+  onDragMove: (y: number) => void;
+  onDragEnd: () => void;
+}) {
+  const heightVh = expanded ? 85 : 50;
+  const initials = artisan.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const toneStyle = (t: "green" | "blue" | "amber") => {
+    if (t === "green") return { bg: "rgba(56,217,138,0.1)", color: "#38D98A", border: "rgba(56,217,138,0.2)" };
+    if (t === "blue") return { bg: "rgba(74,159,212,0.1)", color: "#4A9FD4", border: "rgba(74,159,212,0.2)" };
+    return { bg: "rgba(242,166,35,0.1)", color: "#FFB347", border: "rgba(242,166,35,0.2)" };
+  };
+
+  return (
+    <div className="absolute inset-0 z-30 pointer-events-none">
+      <div
+        className="absolute inset-x-0 bottom-0 pointer-events-auto flex flex-col"
+        style={{
+          height: `${heightVh}vh`,
+          transform: `translateY(${dragOffset}px)`,
+          background: "#0D0F12",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
+          transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
+          animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
+        }}
+      >
+        <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+
+        <div
+          className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
+          onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture(e.pointerId); onDragStart(e.clientY); }}
+          onPointerMove={(e) => { if (e.buttons) onDragMove(e.clientY); }}
+          onPointerUp={onDragEnd}
+          onPointerCancel={onDragEnd}
+        >
+          <div className="w-10 h-1 rounded-full" style={{ background: "rgba(237,240,245,0.25)" }} />
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-5 pb-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 20px)" }}>
+          <div className="flex items-center gap-3">
+            <div
+              className="rounded-full flex items-center justify-center font-display font-extrabold shrink-0"
+              style={{ width: 52, height: 52, background: "linear-gradient(135deg, #C8521A, #8B3A12)", color: "#FFF", fontSize: 18 }}
+            >
+              {initials}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="font-display font-bold text-[18px] leading-tight" style={{ color: "#EDF0F5" }}>{artisan.name}</div>
+              <div className="text-[13px]" style={{ color: "rgba(237,240,245,0.55)" }}>
+                {artisan.trade} • {artisan.area}
+              </div>
+              <div className="text-[13px] font-medium mt-0.5" style={{ color: "#FFB347" }}>
+                ⭐ {artisan.rating.toFixed(1)} <span style={{ color: "rgba(237,240,245,0.55)" }}>({artisan.jobs} interventions)</span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              aria-label="Fermer"
+              className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 active:scale-95 transition"
+              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(237,240,245,0.7)" }}
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+            {artisan.badges.map((b) => {
+              const s = toneStyle(b.tone);
+              return (
+                <div
+                  key={b.label}
+                  className="shrink-0 px-3 h-8 rounded-full flex items-center text-[11px] font-semibold whitespace-nowrap"
+                  style={{ background: s.bg, color: s.color, border: `1px solid ${s.border}` }}
+                >
+                  {b.label}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {[
+              { v: <>{artisan.rate}</>, l: "Tarif", color: "#EDF0F5" },
+              { v: <><span style={{ color: "#38D98A" }}>●</span> Dispo</>, l: "Statut", color: "#38D98A" },
+              { v: <>🚗 {artisan.eta}</>, l: "ETA", color: "#EDF0F5" },
+            ].map((b, i) => (
+              <div
+                key={i}
+                className="rounded-xl py-3 px-2 text-center"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.055)" }}
+              >
+                <div className="font-display font-bold text-[14px]" style={{ color: b.color }}>{b.v}</div>
+                <div className="text-[10px] uppercase tracking-wider mt-1" style={{ color: "rgba(237,240,245,0.5)" }}>{b.l}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="my-5 h-px" style={{ background: "rgba(255,255,255,0.055)" }} />
+
+          <div className="font-display font-bold text-[13px] uppercase tracking-wider mb-3" style={{ color: "rgba(237,240,245,0.7)" }}>
+            Derniers avis
+          </div>
+          <div className="flex flex-col gap-3">
+            {artisan.reviews.slice(0, 2).map((r, i) => (
+              <div
+                key={i}
+                className="flex gap-3 p-3 rounded-xl"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.055)" }}
+              >
+                <div
+                  className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[11px] font-bold"
+                  style={{ background: "rgba(200,82,26,0.18)", color: "#C8521A" }}
+                >
+                  {r.initials.replace(/\./g, "")}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 text-[12px]">
+                    <span className="font-semibold" style={{ color: "#EDF0F5" }}>{r.initials}</span>
+                    <span style={{ color: "#FFB347" }}>{"★".repeat(r.rating)}</span>
+                  </div>
+                  <div className="text-[12.5px] mt-0.5" style={{ color: "rgba(237,240,245,0.75)" }}>{r.text}</div>
+                  <div className="text-[10.5px] mt-1" style={{ color: "rgba(237,240,245,0.4)" }}>{r.date}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-2.5">
+            <button
+              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
+              style={{ background: "#C8521A", color: "#FFFFFF" }}
+            >
+              Demander un devis
+            </button>
+            <button
+              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
+              style={{ background: "transparent", border: "1px solid #C8521A", color: "#C8521A" }}
+            >
+              Contacter directement
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
