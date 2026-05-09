@@ -56,6 +56,8 @@ const clientTypes = [
 
 export function BatidiasQuoteForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   if (submitted) {
     return (
