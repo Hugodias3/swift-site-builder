@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/app/renorides")({
   component: RenoRidesApp,
@@ -13,23 +13,90 @@ export const Route = createFileRoute("/app/renorides")({
 });
 
 type Status = "now" | "soon" | "off";
+type Review = { initials: string; rating: number; text: string; date: string };
 type Artisan = {
   id: string;
   name: string;
   trade: string;
+  area: string;
   emoji: string;
   status: Status;
   eta: string;
+  rate: string;
+  rating: number;
+  jobs: number;
+  badges: { label: string; tone: "green" | "blue" | "amber" }[];
+  reviews: Review[];
   lat: number;
   lng: number;
 };
 
 const ARTISANS: Artisan[] = [
-  { id: "1", name: "Karim B.", trade: "Plombier", emoji: "🔧", status: "now", eta: "8 min", lat: 48.8606, lng: 2.3376 },
-  { id: "2", name: "Mehdi S.", trade: "Serrurier", emoji: "🔒", status: "now", eta: "5 min", lat: 48.8534, lng: 2.3488 },
-  { id: "3", name: "Thomas R.", trade: "Electricien", emoji: "⚡", status: "soon", eta: "22 min", lat: 48.8738, lng: 2.295 },
-  { id: "4", name: "Julien P.", trade: "Multi-services", emoji: "🏠", status: "now", eta: "12 min", lat: 48.8417, lng: 2.3225 },
-  { id: "5", name: "Sébastien M.", trade: "Plombier", emoji: "🔧", status: "off", eta: "Indispo", lat: 48.8675, lng: 2.3624 },
+  {
+    id: "1", name: "Karim B.", trade: "Plombier", area: "Paris 10ème", emoji: "🔧",
+    status: "now", eta: "8 min", rate: "70€/h", rating: 4.8, jobs: 98,
+    badges: [
+      { label: "✓ KBIS valide", tone: "green" },
+      { label: "✓ RC Pro 2026", tone: "green" },
+      { label: "✓ Certifié", tone: "blue" },
+    ],
+    reviews: [
+      { initials: "S.B.", rating: 5, text: "Très réactif, fuite réparée en 30min.", date: "Il y a 1j" },
+      { initials: "M.A.", rating: 5, text: "Travail soigné, prix correct.", date: "Il y a 4j" },
+    ],
+    lat: 48.8606, lng: 2.3376,
+  },
+  {
+    id: "2", name: "Karim D.", trade: "Serrurier", area: "Paris 11ème", emoji: "🔒",
+    status: "now", eta: "5 min", rate: "65€/h", rating: 4.9, jobs: 142,
+    badges: [
+      { label: "✓ KBIS valide", tone: "green" },
+      { label: "✓ RC Pro 2026", tone: "green" },
+      { label: "✓ Certifié", tone: "blue" },
+      { label: "⭐ Artisan de confiance", tone: "amber" },
+    ],
+    reviews: [
+      { initials: "T.M.", rating: 5, text: "Impeccable, rapide et propre.", date: "Il y a 2j" },
+      { initials: "R.L.", rating: 5, text: "Parfait pour l'urgence du dimanche.", date: "Il y a 5j" },
+    ],
+    lat: 48.8534, lng: 2.3488,
+  },
+  {
+    id: "3", name: "Thomas R.", trade: "Electricien", area: "Paris 17ème", emoji: "⚡",
+    status: "soon", eta: "22 min", rate: "75€/h", rating: 4.7, jobs: 76,
+    badges: [
+      { label: "✓ KBIS valide", tone: "green" },
+      { label: "✓ RC Pro 2026", tone: "green" },
+    ],
+    reviews: [
+      { initials: "J.P.", rating: 5, text: "Diagnostic clair, intervention nickel.", date: "Il y a 3j" },
+      { initials: "C.D.", rating: 4, text: "Bon travail, un peu de retard.", date: "Il y a 8j" },
+    ],
+    lat: 48.8738, lng: 2.295,
+  },
+  {
+    id: "4", name: "Julien P.", trade: "Multi-services", area: "Paris 5ème", emoji: "🏠",
+    status: "now", eta: "12 min", rate: "55€/h", rating: 4.6, jobs: 54,
+    badges: [
+      { label: "✓ KBIS valide", tone: "green" },
+      { label: "✓ RC Pro 2026", tone: "green" },
+    ],
+    reviews: [
+      { initials: "A.K.", rating: 5, text: "Polyvalent et arrangeant.", date: "Il y a 6j" },
+      { initials: "L.M.", rating: 4, text: "Bon rapport qualité/prix.", date: "Il y a 10j" },
+    ],
+    lat: 48.8417, lng: 2.3225,
+  },
+  {
+    id: "5", name: "Sébastien M.", trade: "Plombier", area: "Paris 19ème", emoji: "🔧",
+    status: "off", eta: "Indispo", rate: "70€/h", rating: 4.5, jobs: 31,
+    badges: [{ label: "✓ KBIS valide", tone: "green" }],
+    reviews: [
+      { initials: "N.O.", rating: 4, text: "Correct.", date: "Il y a 12j" },
+      { initials: "P.G.", rating: 5, text: "Très pro.", date: "Il y a 20j" },
+    ],
+    lat: 48.8675, lng: 2.3624,
+  },
 ];
 
 const FILTERS = [
@@ -51,6 +118,11 @@ function RenoRidesApp() {
   const [filter, setFilter] = useState("all");
   const [urgent, setUrgent] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const dragRef = useRef<{ startY: number; startExpanded: boolean } | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const selected = ARTISANS.find((a) => a.id === selectedId) || null;
 
   useEffect(() => {
     let alive = true;
@@ -129,10 +201,23 @@ function RenoRidesApp() {
                 <Map.Marker
                   key={a.id}
                   position={[a.lat, a.lng]}
+                  eventHandlers={{
+                    click: (e: any) => {
+                      e.originalEvent?.stopPropagation?.();
+                      if (a.status === "off") return;
+                      if (selectedId && selectedId !== a.id) {
+                        setSelectedId(null);
+                        setExpanded(false);
+                        setTimeout(() => setSelectedId(a.id), 180);
+                      } else {
+                        setSelectedId(a.id);
+                      }
+                    },
+                  }}
                   icon={Map.L.divIcon({
                     className: "",
                     html: `<div style="position:relative;opacity:${dim};display:flex;flex-direction:column;align-items:center">
-                      <div style="width:40px;height:40px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid #0D0F12;box-shadow:0 4px 12px rgba(0,0,0,0.6)">${a.emoji}</div>
+                      <div style="width:40px;height:40px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid ${selectedId === a.id ? "#C8521A" : "#0D0F12"};box-shadow:0 4px 12px rgba(0,0,0,0.6);transition:all .2s">${a.emoji}</div>
                       <div style="margin-top:4px;background:rgba(13,15,18,0.95);color:#EDF0F5;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px;white-space:nowrap;border:1px solid rgba(255,255,255,0.08)">${a.eta}</div>
                     </div>`,
                     iconSize: [44, 60],
@@ -141,6 +226,7 @@ function RenoRidesApp() {
                 />
               );
             })}
+            <MapClickCloser onClick={() => { setSelectedId(null); setExpanded(false); }} useMapEvents={Map.useMapEvents} />
           </Map.MapContainer>
         )}
         {!Map && (
@@ -308,6 +394,196 @@ function RenoRidesApp() {
           </div>
         </div>
       )}
+
+      {/* BOTTOM SHEET */}
+      {selected && (
+        <BottomSheet
+          artisan={selected}
+          expanded={expanded}
+          dragOffset={dragOffset}
+          onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+          onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
+          onDragMove={(y) => {
+            if (!dragRef.current) return;
+            setDragOffset(y - dragRef.current.startY);
+          }}
+          onDragEnd={() => {
+            const o = dragOffset;
+            const startExp = dragRef.current?.startExpanded ?? false;
+            dragRef.current = null;
+            setDragOffset(0);
+            if (startExp) {
+              if (o > 320) { setSelectedId(null); setExpanded(false); }
+              else if (o > 120) setExpanded(false);
+            } else {
+              if (o < -80) setExpanded(true);
+              else if (o > 120) { setSelectedId(null); setExpanded(false); }
+            }
+          }}
+        />
+      )}
     </main>
+  );
+}
+
+function MapClickCloser({ onClick, useMapEvents }: { onClick: () => void; useMapEvents: any }) {
+  useMapEvents({ click: onClick });
+  return null;
+}
+
+function BottomSheet({
+  artisan, expanded, dragOffset, onClose, onDragStart, onDragMove, onDragEnd,
+}: {
+  artisan: Artisan;
+  expanded: boolean;
+  dragOffset: number;
+  onClose: () => void;
+  onDragStart: (y: number) => void;
+  onDragMove: (y: number) => void;
+  onDragEnd: () => void;
+}) {
+  const heightVh = expanded ? 85 : 50;
+  const initials = artisan.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const toneStyle = (t: "green" | "blue" | "amber") => {
+    if (t === "green") return { bg: "rgba(56,217,138,0.1)", color: "#38D98A", border: "rgba(56,217,138,0.2)" };
+    if (t === "blue") return { bg: "rgba(74,159,212,0.1)", color: "#4A9FD4", border: "rgba(74,159,212,0.2)" };
+    return { bg: "rgba(242,166,35,0.1)", color: "#FFB347", border: "rgba(242,166,35,0.2)" };
+  };
+
+  return (
+    <div className="absolute inset-0 z-30 pointer-events-none">
+      <div
+        className="absolute inset-x-0 bottom-0 pointer-events-auto flex flex-col"
+        style={{
+          height: `${heightVh}vh`,
+          transform: `translateY(${dragOffset}px)`,
+          background: "#0D0F12",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
+          transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
+          animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
+        }}
+      >
+        <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+
+        <div
+          className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
+          onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture(e.pointerId); onDragStart(e.clientY); }}
+          onPointerMove={(e) => { if (e.buttons) onDragMove(e.clientY); }}
+          onPointerUp={onDragEnd}
+          onPointerCancel={onDragEnd}
+        >
+          <div className="w-10 h-1 rounded-full" style={{ background: "rgba(237,240,245,0.25)" }} />
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-5 pb-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 20px)" }}>
+          <div className="flex items-center gap-3">
+            <div
+              className="rounded-full flex items-center justify-center font-display font-extrabold shrink-0"
+              style={{ width: 52, height: 52, background: "linear-gradient(135deg, #C8521A, #8B3A12)", color: "#FFF", fontSize: 18 }}
+            >
+              {initials}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="font-display font-bold text-[18px] leading-tight" style={{ color: "#EDF0F5" }}>{artisan.name}</div>
+              <div className="text-[13px]" style={{ color: "rgba(237,240,245,0.55)" }}>
+                {artisan.trade} • {artisan.area}
+              </div>
+              <div className="text-[13px] font-medium mt-0.5" style={{ color: "#FFB347" }}>
+                ⭐ {artisan.rating.toFixed(1)} <span style={{ color: "rgba(237,240,245,0.55)" }}>({artisan.jobs} interventions)</span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              aria-label="Fermer"
+              className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 active:scale-95 transition"
+              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(237,240,245,0.7)" }}
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+            {artisan.badges.map((b) => {
+              const s = toneStyle(b.tone);
+              return (
+                <div
+                  key={b.label}
+                  className="shrink-0 px-3 h-8 rounded-full flex items-center text-[11px] font-semibold whitespace-nowrap"
+                  style={{ background: s.bg, color: s.color, border: `1px solid ${s.border}` }}
+                >
+                  {b.label}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {[
+              { v: <>{artisan.rate}</>, l: "Tarif", color: "#EDF0F5" },
+              { v: <><span style={{ color: "#38D98A" }}>●</span> Dispo</>, l: "Statut", color: "#38D98A" },
+              { v: <>🚗 {artisan.eta}</>, l: "ETA", color: "#EDF0F5" },
+            ].map((b, i) => (
+              <div
+                key={i}
+                className="rounded-xl py-3 px-2 text-center"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.055)" }}
+              >
+                <div className="font-display font-bold text-[14px]" style={{ color: b.color }}>{b.v}</div>
+                <div className="text-[10px] uppercase tracking-wider mt-1" style={{ color: "rgba(237,240,245,0.5)" }}>{b.l}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="my-5 h-px" style={{ background: "rgba(255,255,255,0.055)" }} />
+
+          <div className="font-display font-bold text-[13px] uppercase tracking-wider mb-3" style={{ color: "rgba(237,240,245,0.7)" }}>
+            Derniers avis
+          </div>
+          <div className="flex flex-col gap-3">
+            {artisan.reviews.slice(0, 2).map((r, i) => (
+              <div
+                key={i}
+                className="flex gap-3 p-3 rounded-xl"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.055)" }}
+              >
+                <div
+                  className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[11px] font-bold"
+                  style={{ background: "rgba(200,82,26,0.18)", color: "#C8521A" }}
+                >
+                  {r.initials.replace(/\./g, "")}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 text-[12px]">
+                    <span className="font-semibold" style={{ color: "#EDF0F5" }}>{r.initials}</span>
+                    <span style={{ color: "#FFB347" }}>{"★".repeat(r.rating)}</span>
+                  </div>
+                  <div className="text-[12.5px] mt-0.5" style={{ color: "rgba(237,240,245,0.75)" }}>{r.text}</div>
+                  <div className="text-[10.5px] mt-1" style={{ color: "rgba(237,240,245,0.4)" }}>{r.date}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-2.5">
+            <button
+              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
+              style={{ background: "#C8521A", color: "#FFFFFF" }}
+            >
+              Demander un devis
+            </button>
+            <button
+              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
+              style={{ background: "transparent", border: "1px solid #C8521A", color: "#C8521A" }}
+            >
+              Contacter directement
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
