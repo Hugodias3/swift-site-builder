@@ -154,7 +154,10 @@ function RenoRidesApp() {
                 />
               );
             })}
-            <MapClickCloser onClick={() => { setSelectedId(null); setExpanded(false); }} useMapEvents={Map.useMapEvents} />
+            <MapClickCloser onClick={() => {
+              if (Date.now() - lastMarkerClickAt.current < 350) return;
+              setSelectedId(null); setExpanded(false);
+            }} useMapEvents={Map.useMapEvents} />
           </Map.MapContainer>
         )}
         {!Map && (
