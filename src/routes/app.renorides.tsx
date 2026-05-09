@@ -13,6 +13,10 @@ export const Route = createFileRoute("/app/renorides")({
 });
 
 import { ARTISANS, type Artisan, type Status } from "@/data/renorides-artisans";
+import { BottomNav } from "@/components/renorides/BottomNav";
+import { NonMemberModal } from "@/components/renorides/NonMemberModal";
+
+const IS_MEMBER = false; // demo: non-membre par défaut
 
 const FILTERS = [
   { key: "all", label: "Tous", emoji: "" },
@@ -37,6 +41,7 @@ function RenoRidesApp() {
   const [expanded, setExpanded] = useState(false);
   const dragRef = useRef<{ startY: number; startExpanded: boolean } | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
+  const [showAccess, setShowAccess] = useState(false);
   const selected = ARTISANS.find((a) => a.id === selectedId) || null;
 
   useEffect(() => {
@@ -59,6 +64,7 @@ function RenoRidesApp() {
   });
 
   return (
+    <>
     <main
       className="fixed inset-0 overflow-hidden font-body"
       style={{ background: "#07080A", color: "#EDF0F5" }}
@@ -120,6 +126,7 @@ function RenoRidesApp() {
                     click: (e: any) => {
                       e.originalEvent?.stopPropagation?.();
                       if (a.status === "off") return;
+                      if (!IS_MEMBER) { setShowAccess(true); return; }
                       if (selectedId && selectedId !== a.id) {
                         setSelectedId(null);
                         setExpanded(false);
@@ -219,7 +226,7 @@ function RenoRidesApp() {
         onClick={() => setUrgent(!urgent)}
         className="absolute z-20 right-4 rounded-full flex flex-col items-center justify-center font-display font-extrabold active:scale-95 transition"
         style={{
-          bottom: "calc(max(env(safe-area-inset-bottom), 12px) + 80px)",
+          bottom: "calc(max(env(safe-area-inset-bottom), 12px) + 152px)",
           width: 72,
           height: 72,
           background: urgent ? "#C8521A" : "#FF4F4F",
@@ -233,16 +240,17 @@ function RenoRidesApp() {
         <span className="text-[9px] tracking-widest mt-1">URGENCE</span>
       </button>
 
-      {/* BANNER BAS */}
+      {/* BANNER BAS (au-dessus de la nav) */}
       <footer
-        className="absolute z-10 inset-x-0 bottom-0 px-4"
+        className="absolute z-10 inset-x-0 px-4"
         style={{
+          bottom: "calc(max(env(safe-area-inset-bottom), 6px) + 60px)",
           background: "rgba(13,15,18,0.95)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(255,255,255,0.055)",
-          paddingTop: 12,
-          paddingBottom: "max(env(safe-area-inset-bottom), 12px)",
+          paddingTop: 10,
+          paddingBottom: 10,
         }}
       >
         <div className="flex items-center gap-3">
@@ -338,6 +346,9 @@ function RenoRidesApp() {
         />
       )}
     </main>
+    {!selected && <BottomNav />}
+    <NonMemberModal open={showAccess} onClose={() => setShowAccess(false)} />
+    </>
   );
 }
 
@@ -498,6 +509,14 @@ function BottomSheet({
             >
               Contacter directement
             </button>
+            <Link
+              to="/renorides/artisan/$id"
+              params={{ id: artisan.id }}
+              className="w-full text-center text-[12px] font-semibold underline pt-1"
+              style={{ color: "rgba(237,240,245,0.55)" }}
+            >
+              Voir le profil complet
+            </Link>
           </div>
         </div>
       </div>

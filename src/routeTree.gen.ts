@@ -45,12 +45,16 @@ import { Route as ServicesAideDevoirsRouteImport } from './routes/services.aide-
 import { Route as AppRenoridesRouteImport } from './routes/app.renorides'
 import { Route as AuthenticatedSocialRouteImport } from './routes/_authenticated/social'
 import { Route as AuthenticatedSocialIndexRouteImport } from './routes/_authenticated/social.index'
+import { Route as RenoridesSuiviIdRouteImport } from './routes/renorides.suivi.$id'
+import { Route as RenoridesPaiementIdRouteImport } from './routes/renorides.paiement.$id'
+import { Route as RenoridesNoteIdRouteImport } from './routes/renorides.note.$id'
 import { Route as RenoridesDevisArtisanIdRouteImport } from './routes/renorides.devis.$artisanId'
+import { Route as RenoridesAttenteIdRouteImport } from './routes/renorides.attente.$id'
+import { Route as RenoridesArtisanIdRouteImport } from './routes/renorides.artisan.$id'
 import { Route as AuthenticatedSocialMessagesRouteImport } from './routes/_authenticated/social.messages'
 import { Route as AuthenticatedSocialMeRouteImport } from './routes/_authenticated/social.me'
 import { Route as AuthenticatedSocialGroupesRouteImport } from './routes/_authenticated/social.groupes'
 import { Route as AuthenticatedSocialExplorerRouteImport } from './routes/_authenticated/social.explorer'
-import { Route as RenoridesDevisArtisanIdAttenteRouteImport } from './routes/renorides.devis.$artisanId.attente'
 import { Route as AuthenticatedSocialUUsernameRouteImport } from './routes/_authenticated/social.u.$username'
 import { Route as AuthenticatedSocialTagHashtagRouteImport } from './routes/_authenticated/social.tag.$hashtag'
 
@@ -236,9 +240,34 @@ const AuthenticatedSocialIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedSocialRoute,
   } as any)
+const RenoridesSuiviIdRoute = RenoridesSuiviIdRouteImport.update({
+  id: '/renorides/suivi/$id',
+  path: '/renorides/suivi/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RenoridesPaiementIdRoute = RenoridesPaiementIdRouteImport.update({
+  id: '/renorides/paiement/$id',
+  path: '/renorides/paiement/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RenoridesNoteIdRoute = RenoridesNoteIdRouteImport.update({
+  id: '/renorides/note/$id',
+  path: '/renorides/note/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RenoridesDevisArtisanIdRoute = RenoridesDevisArtisanIdRouteImport.update({
   id: '/renorides/devis/$artisanId',
   path: '/renorides/devis/$artisanId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RenoridesAttenteIdRoute = RenoridesAttenteIdRouteImport.update({
+  id: '/renorides/attente/$id',
+  path: '/renorides/attente/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RenoridesArtisanIdRoute = RenoridesArtisanIdRouteImport.update({
+  id: '/renorides/artisan/$id',
+  path: '/renorides/artisan/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedSocialMessagesRoute =
@@ -263,12 +292,6 @@ const AuthenticatedSocialExplorerRoute =
     id: '/explorer',
     path: '/explorer',
     getParentRoute: () => AuthenticatedSocialRoute,
-  } as any)
-const RenoridesDevisArtisanIdAttenteRoute =
-  RenoridesDevisArtisanIdAttenteRouteImport.update({
-    id: '/attente',
-    path: '/attente',
-    getParentRoute: () => RenoridesDevisArtisanIdRoute,
   } as any)
 const AuthenticatedSocialUUsernameRoute =
   AuthenticatedSocialUUsernameRouteImport.update({
@@ -322,11 +345,15 @@ export interface FileRoutesByFullPath {
   '/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/social/me': typeof AuthenticatedSocialMeRoute
   '/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/artisan/$id': typeof RenoridesArtisanIdRoute
+  '/renorides/attente/$id': typeof RenoridesAttenteIdRoute
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
+  '/renorides/note/$id': typeof RenoridesNoteIdRoute
+  '/renorides/paiement/$id': typeof RenoridesPaiementIdRoute
+  '/renorides/suivi/$id': typeof RenoridesSuiviIdRoute
   '/social/': typeof AuthenticatedSocialIndexRoute
   '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -366,11 +393,15 @@ export interface FileRoutesByTo {
   '/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/social/me': typeof AuthenticatedSocialMeRoute
   '/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/artisan/$id': typeof RenoridesArtisanIdRoute
+  '/renorides/attente/$id': typeof RenoridesAttenteIdRoute
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
+  '/renorides/note/$id': typeof RenoridesNoteIdRoute
+  '/renorides/paiement/$id': typeof RenoridesPaiementIdRoute
+  '/renorides/suivi/$id': typeof RenoridesSuiviIdRoute
   '/social': typeof AuthenticatedSocialIndexRoute
   '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -413,11 +444,15 @@ export interface FileRoutesById {
   '/_authenticated/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/_authenticated/social/me': typeof AuthenticatedSocialMeRoute
   '/_authenticated/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/artisan/$id': typeof RenoridesArtisanIdRoute
+  '/renorides/attente/$id': typeof RenoridesAttenteIdRoute
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
+  '/renorides/note/$id': typeof RenoridesNoteIdRoute
+  '/renorides/paiement/$id': typeof RenoridesPaiementIdRoute
+  '/renorides/suivi/$id': typeof RenoridesSuiviIdRoute
   '/_authenticated/social/': typeof AuthenticatedSocialIndexRoute
   '/_authenticated/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/_authenticated/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -460,11 +495,15 @@ export interface FileRouteTypes {
     | '/social/groupes'
     | '/social/me'
     | '/social/messages'
+    | '/renorides/artisan/$id'
+    | '/renorides/attente/$id'
     | '/renorides/devis/$artisanId'
+    | '/renorides/note/$id'
+    | '/renorides/paiement/$id'
+    | '/renorides/suivi/$id'
     | '/social/'
     | '/social/tag/$hashtag'
     | '/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -504,11 +543,15 @@ export interface FileRouteTypes {
     | '/social/groupes'
     | '/social/me'
     | '/social/messages'
+    | '/renorides/artisan/$id'
+    | '/renorides/attente/$id'
     | '/renorides/devis/$artisanId'
+    | '/renorides/note/$id'
+    | '/renorides/paiement/$id'
+    | '/renorides/suivi/$id'
     | '/social'
     | '/social/tag/$hashtag'
     | '/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   id:
     | '__root__'
     | '/'
@@ -550,11 +593,15 @@ export interface FileRouteTypes {
     | '/_authenticated/social/groupes'
     | '/_authenticated/social/me'
     | '/_authenticated/social/messages'
+    | '/renorides/artisan/$id'
+    | '/renorides/attente/$id'
     | '/renorides/devis/$artisanId'
+    | '/renorides/note/$id'
+    | '/renorides/paiement/$id'
+    | '/renorides/suivi/$id'
     | '/_authenticated/social/'
     | '/_authenticated/social/tag/$hashtag'
     | '/_authenticated/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -564,7 +611,12 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   AppRenoridesRoute: typeof AppRenoridesRoute
-  RenoridesDevisArtisanIdRoute: typeof RenoridesDevisArtisanIdRouteWithChildren
+  RenoridesArtisanIdRoute: typeof RenoridesArtisanIdRoute
+  RenoridesAttenteIdRoute: typeof RenoridesAttenteIdRoute
+  RenoridesDevisArtisanIdRoute: typeof RenoridesDevisArtisanIdRoute
+  RenoridesNoteIdRoute: typeof RenoridesNoteIdRoute
+  RenoridesPaiementIdRoute: typeof RenoridesPaiementIdRoute
+  RenoridesSuiviIdRoute: typeof RenoridesSuiviIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -821,11 +873,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSocialIndexRouteImport
       parentRoute: typeof AuthenticatedSocialRoute
     }
+    '/renorides/suivi/$id': {
+      id: '/renorides/suivi/$id'
+      path: '/renorides/suivi/$id'
+      fullPath: '/renorides/suivi/$id'
+      preLoaderRoute: typeof RenoridesSuiviIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/renorides/paiement/$id': {
+      id: '/renorides/paiement/$id'
+      path: '/renorides/paiement/$id'
+      fullPath: '/renorides/paiement/$id'
+      preLoaderRoute: typeof RenoridesPaiementIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/renorides/note/$id': {
+      id: '/renorides/note/$id'
+      path: '/renorides/note/$id'
+      fullPath: '/renorides/note/$id'
+      preLoaderRoute: typeof RenoridesNoteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/renorides/devis/$artisanId': {
       id: '/renorides/devis/$artisanId'
       path: '/renorides/devis/$artisanId'
       fullPath: '/renorides/devis/$artisanId'
       preLoaderRoute: typeof RenoridesDevisArtisanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/renorides/attente/$id': {
+      id: '/renorides/attente/$id'
+      path: '/renorides/attente/$id'
+      fullPath: '/renorides/attente/$id'
+      preLoaderRoute: typeof RenoridesAttenteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/renorides/artisan/$id': {
+      id: '/renorides/artisan/$id'
+      path: '/renorides/artisan/$id'
+      fullPath: '/renorides/artisan/$id'
+      preLoaderRoute: typeof RenoridesArtisanIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/social/messages': {
@@ -855,13 +942,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/social/explorer'
       preLoaderRoute: typeof AuthenticatedSocialExplorerRouteImport
       parentRoute: typeof AuthenticatedSocialRoute
-    }
-    '/renorides/devis/$artisanId/attente': {
-      id: '/renorides/devis/$artisanId/attente'
-      path: '/attente'
-      fullPath: '/renorides/devis/$artisanId/attente'
-      preLoaderRoute: typeof RenoridesDevisArtisanIdAttenteRouteImport
-      parentRoute: typeof RenoridesDevisArtisanIdRoute
     }
     '/_authenticated/social/u/$username': {
       id: '/_authenticated/social/u/$username'
@@ -981,20 +1061,6 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
   ServicesRouteChildren,
 )
 
-interface RenoridesDevisArtisanIdRouteChildren {
-  RenoridesDevisArtisanIdAttenteRoute: typeof RenoridesDevisArtisanIdAttenteRoute
-}
-
-const RenoridesDevisArtisanIdRouteChildren: RenoridesDevisArtisanIdRouteChildren =
-  {
-    RenoridesDevisArtisanIdAttenteRoute: RenoridesDevisArtisanIdAttenteRoute,
-  }
-
-const RenoridesDevisArtisanIdRouteWithChildren =
-  RenoridesDevisArtisanIdRoute._addFileChildren(
-    RenoridesDevisArtisanIdRouteChildren,
-  )
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
@@ -1002,7 +1068,12 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRouteWithChildren,
   AppRenoridesRoute: AppRenoridesRoute,
-  RenoridesDevisArtisanIdRoute: RenoridesDevisArtisanIdRouteWithChildren,
+  RenoridesArtisanIdRoute: RenoridesArtisanIdRoute,
+  RenoridesAttenteIdRoute: RenoridesAttenteIdRoute,
+  RenoridesDevisArtisanIdRoute: RenoridesDevisArtisanIdRoute,
+  RenoridesNoteIdRoute: RenoridesNoteIdRoute,
+  RenoridesPaiementIdRoute: RenoridesPaiementIdRoute,
+  RenoridesSuiviIdRoute: RenoridesSuiviIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

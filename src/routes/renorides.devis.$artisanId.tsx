@@ -52,8 +52,14 @@ function DevisPage() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+    try {
+      sessionStorage.setItem(
+        `renorides:demand:${artisanId}`,
+        JSON.stringify({ type, desc, address, photos: photos.length, artisanId, ts: Date.now() })
+      );
+    } catch {}
     setTimeout(() => {
-      navigate({ to: "/renorides/devis/$artisanId/attente", params: { artisanId } });
+      navigate({ to: "/renorides/attente/$id", params: { id: artisanId } });
     }, 1100);
   };
 
