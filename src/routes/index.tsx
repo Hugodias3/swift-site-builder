@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -53,27 +54,7 @@ function Index() {
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* NAV */}
-      <nav className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#top" className="font-display text-2xl tracking-wide">
-            <span className="text-rust">RE</span>
-            <span>PÈRE</span>
-          </a>
-          <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest text-muted-foreground">
-            <a href="#services" className="hover:text-foreground transition">Services</a>
-            <a href="#abos" className="hover:text-foreground transition">Abonnements</a>
-            <a href="#manifeste" className="hover:text-foreground transition">Manifeste</a>
-            <a href="#waitlist" className="hover:text-foreground transition">Waitlist</a>
-          </div>
-          <a
-            href="#waitlist"
-            className="px-4 py-2 bg-rust text-primary-foreground text-sm font-bold uppercase tracking-wider hover:opacity-90 transition"
-          >
-            Rejoindre
-          </a>
-        </div>
-      </nav>
+      <SiteHeader />
 
       {/* HERO */}
       <section id="top" className="relative grain min-h-screen flex items-center pt-24 pb-16">
