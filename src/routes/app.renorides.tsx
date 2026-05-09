@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { X } from "lucide-react";
 
 export const Route = createFileRoute("/app/renorides")({
   component: RenoRidesApp,
@@ -392,6 +393,29 @@ function MapClickCloser({ onClick, useMapEvents }: { onClick: () => void; useMap
   return null;
 }
 
+function MapGestureLock({ locked, useMap }: { locked: boolean; useMap: any }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!map) return;
+    if (locked) {
+      map.dragging?.disable();
+      map.scrollWheelZoom?.disable();
+      map.doubleClickZoom?.disable();
+      map.touchZoom?.disable();
+      map.boxZoom?.disable();
+      map.keyboard?.disable();
+    } else {
+      map.dragging?.enable();
+      map.scrollWheelZoom?.enable();
+      map.doubleClickZoom?.enable();
+      map.touchZoom?.enable();
+      map.boxZoom?.enable();
+      map.keyboard?.enable();
+    }
+  }, [map, locked]);
+  return null;
+}
+
 function BottomSheet({
   artisan, expanded, dragOffset, onClose, onDragStart, onDragMove, onDragEnd,
 }: {
@@ -435,6 +459,17 @@ function BottomSheet({
     >
       <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
 
+        {/* Close button top-right */}
+        <button
+          onClick={onClose}
+          aria-label="Fermer"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center active:scale-95 transition"
+          style={{ background: "rgba(255,255,255,0.08)", color: "#EDF0F5", zIndex: 2 }}
+        >
+          <X size={18} strokeWidth={2.4} />
+        </button>
+
+        {/* Drag handle */}
         <div
           className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
           onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture(e.pointerId); onDragStart(e.clientY); }}
@@ -442,11 +477,14 @@ function BottomSheet({
           onPointerUp={onDragEnd}
           onPointerCancel={onDragEnd}
         >
-          <div className="w-10 h-1 rounded-full" style={{ background: "rgba(237,240,245,0.25)" }} />
+          <div className="w-12 h-1.5 rounded-full" style={{ background: "rgba(237,240,245,0.3)" }} />
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom), 20px)" }}>
-          <div className="flex items-center gap-3">
+        <div
+          className="flex-1 overflow-y-auto px-5 pb-5"
+          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 28px)", overscrollBehavior: "contain" }}
+        >
+          <div className="flex items-center gap-3 pr-12">
             <div
               className="rounded-full flex items-center justify-center font-display font-extrabold shrink-0"
               style={{ width: 52, height: 52, background: "linear-gradient(135deg, #C8521A, #8B3A12)", color: "#FFF", fontSize: 18 }}
@@ -462,14 +500,6 @@ function BottomSheet({
                 ⭐ {artisan.rating.toFixed(1)} <span style={{ color: "rgba(237,240,245,0.55)" }}>({artisan.jobs} interventions)</span>
               </div>
             </div>
-            <button
-              onClick={onClose}
-              aria-label="Fermer"
-              className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 active:scale-95 transition"
-              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(237,240,245,0.7)" }}
-            >
-              ✕
-            </button>
           </div>
 
           <div className="mt-4 flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
