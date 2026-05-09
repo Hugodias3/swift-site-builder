@@ -59,7 +59,7 @@ export function NonMemberModal({ open, onClose, onGrant }: { open: boolean; onCl
             <div className="mt-2 text-[11px]"><span style={{ color: "#FFB347" }} className="font-bold">22%</span> <span style={{ color: "rgba(237,240,245,0.55)" }}>commission</span></div>
             <div className="text-[10px] mt-1" style={{ color: "#FFB347" }}>+26,40€ sur 120€</div>
             <button
-              onClick={onClose}
+              onClick={() => { onGrant?.(); onClose(); }}
               className="mt-4 h-10 rounded-lg flex items-center justify-center text-[12px] font-bold uppercase tracking-wider"
               style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(237,240,245,0.85)", fontFamily: "'Syne', sans-serif" }}
             >
