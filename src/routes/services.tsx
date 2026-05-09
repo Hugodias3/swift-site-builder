@@ -181,7 +181,6 @@ function ServicesIndex() {
                   </Link>
                 ))}
               </div>
-              </div>
             </div>
           ))}
         </div>
