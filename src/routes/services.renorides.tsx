@@ -77,6 +77,8 @@ function RenoRides() {
         },
       ]}
       next={{ label: "Garde d'Urgence Flash", to: "/services/garde-flash" }}
-    />
+    >
+      <ArtisansMap />
+    </ServicePage>
   );
 }
