@@ -238,16 +238,17 @@ function RenoRidesApp() {
         <span className="text-[9px] tracking-widest mt-1">URGENCE</span>
       </button>
 
-      {/* BANNER BAS */}
+      {/* BANNER BAS (au-dessus de la nav) */}
       <footer
-        className="absolute z-10 inset-x-0 bottom-0 px-4"
+        className="absolute z-10 inset-x-0 px-4"
         style={{
+          bottom: "calc(max(env(safe-area-inset-bottom), 6px) + 60px)",
           background: "rgba(13,15,18,0.95)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(255,255,255,0.055)",
-          paddingTop: 12,
-          paddingBottom: "max(env(safe-area-inset-bottom), 12px)",
+          paddingTop: 10,
+          paddingBottom: 10,
         }}
       >
         <div className="flex items-center gap-3">
