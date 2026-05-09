@@ -289,17 +289,7 @@ function Index() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="font-display text-xl">
-            <span className="text-rust">RE</span>PÈRE
-          </div>
-          <div className="text-xs uppercase tracking-widest text-muted-foreground">
-            © 2026 RePère · On le devient ensemble
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
