@@ -158,6 +158,8 @@ function RenoRidesApp() {
               if (Date.now() - lastMarkerClickAt.current < 350) return;
               setSelectedId(null); setExpanded(false);
             }} useMapEvents={Map.useMapEvents} />
+            <MapGestureLock locked={!!selectedId} useMap={Map.useMap} />
+
           </Map.MapContainer>
         )}
         {!Map && (
@@ -327,32 +329,49 @@ function RenoRidesApp() {
         </div>
       )}
 
-      {/* BOTTOM SHEET */}
+      {/* BACKDROP + BOTTOM SHEET */}
       {selected && (
-        <BottomSheet
-          artisan={selected}
-          expanded={expanded}
-          dragOffset={dragOffset}
-          onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
-          onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
-          onDragMove={(y) => {
-            if (!dragRef.current) return;
-            setDragOffset(y - dragRef.current.startY);
-          }}
-          onDragEnd={() => {
-            const o = dragOffset;
-            const startExp = dragRef.current?.startExpanded ?? false;
-            dragRef.current = null;
-            setDragOffset(0);
-            if (startExp) {
-              if (o > 320) { setSelectedId(null); setExpanded(false); }
-              else if (o > 120) setExpanded(false);
-            } else {
-              if (o < -80) setExpanded(true);
-              else if (o > 120) { setSelectedId(null); setExpanded(false); }
-            }
-          }}
-        />
+        <>
+          <div
+            onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1150,
+              background: "rgba(7,8,10,0.55)",
+              backdropFilter: "blur(2px)",
+              WebkitBackdropFilter: "blur(2px)",
+              animation: "backdrop-in 0.25s ease-out",
+            }}
+          />
+          <style>{`@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }`}</style>
+          <BottomSheet
+            artisan={selected}
+            expanded={expanded}
+            dragOffset={dragOffset}
+            onClose={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+            onDragStart={(y) => { dragRef.current = { startY: y, startExpanded: expanded }; }}
+            onDragMove={(y) => {
+              if (!dragRef.current) return;
+              const dy = y - dragRef.current.startY;
+              // Block upward drag past expand; allow downward freely
+              setDragOffset(dragRef.current.startExpanded ? Math.max(0, dy) : dy);
+            }}
+            onDragEnd={() => {
+              const o = dragOffset;
+              const startExp = dragRef.current?.startExpanded ?? false;
+              dragRef.current = null;
+              setDragOffset(0);
+              if (startExp) {
+                if (o > 240) { setSelectedId(null); setExpanded(false); }
+                else if (o > 100) setExpanded(false);
+              } else {
+                if (o < -80) setExpanded(true);
+                else if (o > 100) { setSelectedId(null); setExpanded(false); }
+              }
+            }}
+          />
+        </>
       )}
     </main>
     {!selected && <BottomNav />}
