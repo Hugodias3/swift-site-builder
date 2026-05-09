@@ -111,6 +111,75 @@ export type Database = {
         }
         Relationships: []
       }
+      devis_batidias: {
+        Row: {
+          adresse: string
+          budget: string | null
+          created_at: string
+          delai: string | null
+          description: string
+          disponibilites: Json
+          email: string
+          id: string
+          message: string | null
+          nb_photos: number
+          nom: string
+          prenom: string
+          reference: string
+          statut: string
+          statut_propriete: string | null
+          surface: string | null
+          telephone: string
+          type_logement: string | null
+          types_travaux: string[]
+          updated_at: string
+        }
+        Insert: {
+          adresse: string
+          budget?: string | null
+          created_at?: string
+          delai?: string | null
+          description: string
+          disponibilites?: Json
+          email: string
+          id?: string
+          message?: string | null
+          nb_photos?: number
+          nom: string
+          prenom: string
+          reference: string
+          statut?: string
+          statut_propriete?: string | null
+          surface?: string | null
+          telephone: string
+          type_logement?: string | null
+          types_travaux?: string[]
+          updated_at?: string
+        }
+        Update: {
+          adresse?: string
+          budget?: string | null
+          created_at?: string
+          delai?: string | null
+          description?: string
+          disponibilites?: Json
+          email?: string
+          id?: string
+          message?: string | null
+          nb_photos?: number
+          nom?: string
+          prenom?: string
+          reference?: string
+          statut?: string
+          statut_propriete?: string | null
+          surface?: string | null
+          telephone?: string
+          type_logement?: string | null
+          types_travaux?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
