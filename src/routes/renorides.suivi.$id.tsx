@@ -120,7 +120,7 @@ function SuiviPage() {
       {/* TOP BANNER */}
       {(eta < 5 || arrived) && (
         <div
-          className="absolute top-0 inset-x-0 z-20 px-4 py-3 text-center text-[13px] font-semibold"
+          className="absolute top-0 inset-x-0 z-[1000] px-4 py-3 text-center text-[13px] font-semibold"
           style={{
             background: arrived ? "rgba(56,217,138,0.95)" : "rgba(255,179,71,0.95)",
             color: arrived ? "#06210F" : "#3B2200",
@@ -134,7 +134,7 @@ function SuiviPage() {
 
       {/* PANEL BAS */}
       <div
-        className="absolute inset-x-0 bottom-0 z-20 p-5"
+        className="absolute inset-x-0 bottom-0 z-[1000] p-5"
         style={{
           background: "#0D0F12",
           borderTop: "1px solid rgba(255,255,255,0.1)",

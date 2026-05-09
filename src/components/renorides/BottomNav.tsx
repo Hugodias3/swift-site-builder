@@ -12,7 +12,7 @@ export function BottomNav() {
   const { pathname } = useLocation();
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 flex"
+      className="fixed inset-x-0 bottom-0 z-[1100] flex"
       style={{
         background: "#0D0F12",
         borderTop: "1px solid rgba(255,255,255,0.055)",

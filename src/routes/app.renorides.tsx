@@ -169,7 +169,7 @@ function RenoRidesApp() {
 
       {/* NAVBAR */}
       <header
-        className="absolute top-0 inset-x-0 z-20 px-4"
+        className="absolute top-0 inset-x-0 z-[1000] px-4"
         style={{
           background: "rgba(7,8,10,0.97)",
           backdropFilter: "blur(20px)",
@@ -198,7 +198,7 @@ function RenoRidesApp() {
 
       {/* FILTERS */}
       <div
-        className="absolute z-10 inset-x-0 px-4 py-3"
+        className="absolute z-[1000] inset-x-0 px-4 py-3"
         style={{
           top: "calc(max(env(safe-area-inset-top), 12px) + 56px)",
           background: "rgba(13,15,18,0.95)",
@@ -233,7 +233,7 @@ function RenoRidesApp() {
       {/* FAB URGENCE */}
       <button
         onClick={() => setUrgent(!urgent)}
-        className="absolute z-20 right-4 rounded-full flex flex-col items-center justify-center font-display font-extrabold active:scale-95 transition"
+        className="absolute z-[1010] right-4 rounded-full flex flex-col items-center justify-center font-display font-extrabold active:scale-95 transition"
         style={{
           bottom: "calc(max(env(safe-area-inset-bottom), 12px) + 152px)",
           width: 72,
@@ -251,7 +251,7 @@ function RenoRidesApp() {
 
       {/* BANNER BAS (au-dessus de la nav) */}
       <footer
-        className="absolute z-10 inset-x-0 px-4"
+        className="absolute z-[1000] inset-x-0 px-4"
         style={{
           bottom: "calc(max(env(safe-area-inset-bottom), 6px) + 60px)",
           background: "rgba(13,15,18,0.95)",
@@ -290,7 +290,7 @@ function RenoRidesApp() {
       {/* MENU OVERLAY */}
       {menu && (
         <div
-          className="absolute inset-0 z-30"
+          className="absolute inset-0 z-[1300]"
           style={{ background: "rgba(7,8,10,0.85)", backdropFilter: "blur(12px)" }}
           onClick={() => setMenu(false)}
         >
@@ -401,7 +401,7 @@ function BottomSheet({
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 10000,
+        zIndex: 1200,
         height: `${heightVh}vh`,
         transform: `translateY(${dragOffset}px)`,
         background: "#0D0F12",
