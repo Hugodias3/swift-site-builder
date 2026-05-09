@@ -42,6 +42,10 @@ function RenoRidesApp() {
   const dragRef = useRef<{ startY: number; startExpanded: boolean } | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
   const [showAccess, setShowAccess] = useState(false);
+  const [accessGranted, setAccessGranted] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem("renorides_access") === "1";
+  });
   const selected = ARTISANS.find((a) => a.id === selectedId) || null;
 
   useEffect(() => {
