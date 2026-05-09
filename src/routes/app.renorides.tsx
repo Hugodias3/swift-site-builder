@@ -334,18 +334,31 @@ function RenoRidesApp() {
       {/* BACKDROP + BOTTOM SHEET */}
       {selected && (
         <>
-          <div
-            onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: Z.sheetBackdrop,
-              background: "rgba(7,8,10,0.55)",
-              backdropFilter: "blur(2px)",
-              WebkitBackdropFilter: "blur(2px)",
-              animation: "backdrop-in 0.25s ease-out",
-            }}
-          />
+          {(() => {
+            // Fade + blur backdrop with drag progress (closer = more transparent)
+            const closeRange = expanded ? 240 : 100;
+            const progress = Math.max(0, Math.min(1, dragOffset / closeRange));
+            const opacity = 0.55 * (1 - progress);
+            const blur = 8 * (1 - progress);
+            return (
+              <div
+                onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+                aria-hidden="true"
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  zIndex: Z.sheetBackdrop,
+                  background: `rgba(7,8,10,${opacity})`,
+                  backdropFilter: `blur(${blur}px)`,
+                  WebkitBackdropFilter: `blur(${blur}px)`,
+                  transition: dragOffset === 0
+                    ? "background 0.32s ease-out, backdrop-filter 0.32s ease-out, -webkit-backdrop-filter 0.32s ease-out"
+                    : "none",
+                  animation: "backdrop-in 0.28s ease-out",
+                }}
+              />
+            );
+          })()}
           <style>{`@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }`}</style>
           <BottomSheet
             artisan={selected}
@@ -356,7 +369,6 @@ function RenoRidesApp() {
             onDragMove={(y) => {
               if (!dragRef.current) return;
               const dy = y - dragRef.current.startY;
-              // Block upward drag past expand; allow downward freely
               setDragOffset(dragRef.current.startExpanded ? Math.max(0, dy) : dy);
             }}
             onDragEnd={() => {
