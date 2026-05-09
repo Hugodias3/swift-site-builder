@@ -534,7 +534,6 @@ function BottomSheet({
             </Link>
           </div>
         </div>
-      </div>
     </div>
   );
 }
