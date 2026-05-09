@@ -334,18 +334,31 @@ function RenoRidesApp() {
       {/* BACKDROP + BOTTOM SHEET */}
       {selected && (
         <>
-          <div
-            onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: Z.sheetBackdrop,
-              background: "rgba(7,8,10,0.55)",
-              backdropFilter: "blur(2px)",
-              WebkitBackdropFilter: "blur(2px)",
-              animation: "backdrop-in 0.25s ease-out",
-            }}
-          />
+          {(() => {
+            // Fade + blur backdrop with drag progress (closer = more transparent)
+            const closeRange = expanded ? 240 : 100;
+            const progress = Math.max(0, Math.min(1, dragOffset / closeRange));
+            const opacity = 0.55 * (1 - progress);
+            const blur = 8 * (1 - progress);
+            return (
+              <div
+                onClick={() => { setSelectedId(null); setExpanded(false); setDragOffset(0); }}
+                aria-hidden="true"
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  zIndex: Z.sheetBackdrop,
+                  background: `rgba(7,8,10,${opacity})`,
+                  backdropFilter: `blur(${blur}px)`,
+                  WebkitBackdropFilter: `blur(${blur}px)`,
+                  transition: dragOffset === 0
+                    ? "background 0.32s ease-out, backdrop-filter 0.32s ease-out, -webkit-backdrop-filter 0.32s ease-out"
+                    : "none",
+                  animation: "backdrop-in 0.28s ease-out",
+                }}
+              />
+            );
+          })()}
           <style>{`@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }`}</style>
           <BottomSheet
             artisan={selected}
@@ -356,7 +369,6 @@ function RenoRidesApp() {
             onDragMove={(y) => {
               if (!dragRef.current) return;
               const dy = y - dragRef.current.startY;
-              // Block upward drag past expand; allow downward freely
               setDragOffset(dragRef.current.startExpanded ? Math.max(0, dy) : dy);
             }}
             onDragEnd={() => {
@@ -430,6 +442,40 @@ function BottomSheet({
 }) {
   const heightVh = expanded ? 85 : 50;
   const initials = artisan.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+  const sheetRef = useRef<HTMLDivElement | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  // Focus trap + ESC + restore previous focus
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && sheetRef.current) {
+        const focusables = sheetRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      previouslyFocused?.focus?.();
+    };
+  }, [onClose]);
 
   const toneStyle = (t: "green" | "blue" | "amber") => {
     if (t === "green") return { bg: "rgba(56,217,138,0.1)", color: "#38D98A", border: "rgba(56,217,138,0.2)" };
@@ -439,6 +485,10 @@ function BottomSheet({
 
   return (
     <div
+      ref={sheetRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Profil ${artisan.name}`}
       className="pointer-events-auto flex flex-col"
       style={{
         position: "fixed",
@@ -446,15 +496,18 @@ function BottomSheet({
         right: 0,
         bottom: 0,
         zIndex: Z.bottomSheet,
-        height: `${heightVh}vh`,
+        // Use dvh for iOS stable viewport; cap so notch/safe-area-top is never covered
+        height: `min(${heightVh}dvh, calc(100dvh - env(safe-area-inset-top, 0px) - 12px))`,
         transform: `translateY(${dragOffset}px)`,
         background: "#0D0F12",
         borderTop: "1px solid rgba(255,255,255,0.1)",
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
-        transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
-        animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
+        transition: dragOffset === 0
+          ? "transform 0.36s cubic-bezier(0.22,1,0.36,1), height 0.32s cubic-bezier(0.32,0.72,0,1)"
+          : "none",
+        animation: "sheet-up 0.36s cubic-bezier(0.22,1,0.36,1)",
         willChange: "transform",
       }}
     >
@@ -462,6 +515,7 @@ function BottomSheet({
 
         {/* Close button top-right */}
         <button
+          ref={closeBtnRef}
           onClick={onClose}
           aria-label="Fermer"
           className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center active:scale-95 transition"
@@ -470,20 +524,23 @@ function BottomSheet({
           <X size={18} strokeWidth={2.4} />
         </button>
 
-        {/* Drag handle */}
+        {/* Drag handle — ONLY drag affordance; content scrolls independently */}
         <div
-          className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
+          role="separator"
+          aria-label="Glisser pour redimensionner"
+          aria-orientation="horizontal"
+          className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none select-none"
           onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture(e.pointerId); onDragStart(e.clientY); }}
           onPointerMove={(e) => { if (e.buttons) onDragMove(e.clientY); }}
           onPointerUp={onDragEnd}
           onPointerCancel={onDragEnd}
         >
-          <div className="w-12 h-1.5 rounded-full" style={{ background: "rgba(237,240,245,0.3)" }} />
+          <div className="w-12 h-1.5 rounded-full" style={{ background: "rgba(237,240,245,0.35)" }} />
         </div>
 
         <div
-          className="flex-1 overflow-y-auto px-5 pb-5"
-          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 28px)", overscrollBehavior: "contain" }}
+          className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5"
+          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 28px)", touchAction: "pan-y" }}
         >
           <div className="flex items-center gap-3 pr-12">
             <div
