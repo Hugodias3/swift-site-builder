@@ -161,43 +161,26 @@ function ServicesIndex() {
                 <div className="text-xs font-mono text-rust mb-4">0{i + 1}</div>
                 <h2 className="font-display text-4xl md:text-5xl uppercase leading-[0.95]">{c.title}</h2>
                 <p className="mt-6 text-muted-foreground">{c.desc}</p>
-                {c.available && (
-                  <div className="mt-6 inline-flex items-center gap-2 px-3 py-1 border border-rust/40 text-rust text-xs uppercase tracking-widest">
-                    <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse" />
-                    Pages détaillées disponibles
-                  </div>
-                )}
               </div>
               <div className="lg:col-span-8 grid sm:grid-cols-2 gap-px bg-border">
-                {c.services.map((s) => {
-                  const inner = (
-                    <div className="bg-background p-6 h-full hover:bg-card transition group">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="font-display text-xl uppercase group-hover:text-rust transition">
-                            {s.name}
-                          </h3>
-                          <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-                        </div>
-                        {"to" in s && s.to && (
-                          <span className="text-rust text-xl shrink-0">→</span>
-                        )}
+                {c.services.map((s) => (
+                  <Link
+                    key={s.name}
+                    to={s.to}
+                    className="block bg-background p-6 h-full hover:bg-card transition group"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="font-display text-xl uppercase group-hover:text-rust transition">
+                          {s.name}
+                        </h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
                       </div>
-                      {!("to" in s && s.to) && (
-                        <div className="mt-4 text-xs uppercase tracking-widest text-muted-foreground">
-                          Bientôt disponible
-                        </div>
-                      )}
+                      <span className="text-rust text-xl shrink-0">→</span>
                     </div>
-                  );
-                  return "to" in s && s.to ? (
-                    <Link key={s.name} to={s.to} className="block">
-                      {inner}
-                    </Link>
-                  ) : (
-                    <div key={s.name}>{inner}</div>
-                  );
-                })}
+                  </Link>
+                ))}
+              </div>
               </div>
             </div>
           ))}
