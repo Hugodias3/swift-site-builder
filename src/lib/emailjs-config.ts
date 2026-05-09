@@ -15,7 +15,7 @@ export const EMAILJS_CONFIG = {
   SERVICE_ID: "service_BATIDIAS",
   TEMPLATE_TEAM_ID: "BATIDIAS_EMAIL",
   TEMPLATE_CLIENT_ID: "BATIDIAS_EMAIL",
-  PUBLIC_KEY: "OoO117nkipohk9Y-4uo9K",
+  PUBLIC_KEY: "9NEHFyR4Zxwn4youO",
   TEAM_EMAIL: "batidiasgestion@hotmail.com",
 } as const;
 
