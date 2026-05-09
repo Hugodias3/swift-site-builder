@@ -509,6 +509,14 @@ function BottomSheet({
             >
               Contacter directement
             </button>
+            <Link
+              to="/renorides/artisan/$id"
+              params={{ id: artisan.id }}
+              className="w-full text-center text-[12px] font-semibold underline pt-1"
+              style={{ color: "rgba(237,240,245,0.55)" }}
+            >
+              Voir le profil complet
+            </Link>
           </div>
         </div>
       </div>
