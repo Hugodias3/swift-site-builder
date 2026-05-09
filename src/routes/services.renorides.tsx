@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
+import { ArtisansMap } from "@/components/ArtisansMap";
 
 export const Route = createFileRoute("/services/renorides")({
   component: RenoRides,
