@@ -214,9 +214,11 @@ function Index() {
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {s.items.map((it) => (
-                    <li key={it} className="flex gap-2">
-                      <span className="text-rust">→</span>
-                      <span>{it}</span>
+                    <li key={it.name}>
+                      <Link to={it.to} className="flex gap-2 hover:text-rust transition-colors">
+                        <span className="text-rust">→</span>
+                        <span>{it.name}</span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
