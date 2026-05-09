@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
+import { ArtisansMap } from "@/components/ArtisansMap";
 
 export const Route = createFileRoute("/services/renorides")({
   component: RenoRides,
@@ -76,6 +77,8 @@ function RenoRides() {
         },
       ]}
       next={{ label: "Garde d'Urgence Flash", to: "/services/garde-flash" }}
-    />
+    >
+      <ArtisansMap />
+    </ServicePage>
   );
 }
