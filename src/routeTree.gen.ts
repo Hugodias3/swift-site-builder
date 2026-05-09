@@ -50,7 +50,6 @@ import { Route as AuthenticatedSocialMessagesRouteImport } from './routes/_authe
 import { Route as AuthenticatedSocialMeRouteImport } from './routes/_authenticated/social.me'
 import { Route as AuthenticatedSocialGroupesRouteImport } from './routes/_authenticated/social.groupes'
 import { Route as AuthenticatedSocialExplorerRouteImport } from './routes/_authenticated/social.explorer'
-import { Route as RenoridesDevisArtisanIdAttenteRouteImport } from './routes/renorides.devis.$artisanId.attente'
 import { Route as AuthenticatedSocialUUsernameRouteImport } from './routes/_authenticated/social.u.$username'
 import { Route as AuthenticatedSocialTagHashtagRouteImport } from './routes/_authenticated/social.tag.$hashtag'
 
@@ -264,12 +263,6 @@ const AuthenticatedSocialExplorerRoute =
     path: '/explorer',
     getParentRoute: () => AuthenticatedSocialRoute,
   } as any)
-const RenoridesDevisArtisanIdAttenteRoute =
-  RenoridesDevisArtisanIdAttenteRouteImport.update({
-    id: '/attente',
-    path: '/attente',
-    getParentRoute: () => RenoridesDevisArtisanIdRoute,
-  } as any)
 const AuthenticatedSocialUUsernameRoute =
   AuthenticatedSocialUUsernameRouteImport.update({
     id: '/u/$username',
@@ -322,11 +315,10 @@ export interface FileRoutesByFullPath {
   '/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/social/me': typeof AuthenticatedSocialMeRoute
   '/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
   '/social/': typeof AuthenticatedSocialIndexRoute
   '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -366,11 +358,10 @@ export interface FileRoutesByTo {
   '/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/social/me': typeof AuthenticatedSocialMeRoute
   '/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
   '/social': typeof AuthenticatedSocialIndexRoute
   '/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -413,11 +404,10 @@ export interface FileRoutesById {
   '/_authenticated/social/groupes': typeof AuthenticatedSocialGroupesRoute
   '/_authenticated/social/me': typeof AuthenticatedSocialMeRoute
   '/_authenticated/social/messages': typeof AuthenticatedSocialMessagesRoute
-  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRouteWithChildren
+  '/renorides/devis/$artisanId': typeof RenoridesDevisArtisanIdRoute
   '/_authenticated/social/': typeof AuthenticatedSocialIndexRoute
   '/_authenticated/social/tag/$hashtag': typeof AuthenticatedSocialTagHashtagRoute
   '/_authenticated/social/u/$username': typeof AuthenticatedSocialUUsernameRoute
-  '/renorides/devis/$artisanId/attente': typeof RenoridesDevisArtisanIdAttenteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -464,7 +454,6 @@ export interface FileRouteTypes {
     | '/social/'
     | '/social/tag/$hashtag'
     | '/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -508,7 +497,6 @@ export interface FileRouteTypes {
     | '/social'
     | '/social/tag/$hashtag'
     | '/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   id:
     | '__root__'
     | '/'
@@ -554,7 +542,6 @@ export interface FileRouteTypes {
     | '/_authenticated/social/'
     | '/_authenticated/social/tag/$hashtag'
     | '/_authenticated/social/u/$username'
-    | '/renorides/devis/$artisanId/attente'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -564,7 +551,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   AppRenoridesRoute: typeof AppRenoridesRoute
-  RenoridesDevisArtisanIdRoute: typeof RenoridesDevisArtisanIdRouteWithChildren
+  RenoridesDevisArtisanIdRoute: typeof RenoridesDevisArtisanIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -856,13 +843,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSocialExplorerRouteImport
       parentRoute: typeof AuthenticatedSocialRoute
     }
-    '/renorides/devis/$artisanId/attente': {
-      id: '/renorides/devis/$artisanId/attente'
-      path: '/attente'
-      fullPath: '/renorides/devis/$artisanId/attente'
-      preLoaderRoute: typeof RenoridesDevisArtisanIdAttenteRouteImport
-      parentRoute: typeof RenoridesDevisArtisanIdRoute
-    }
     '/_authenticated/social/u/$username': {
       id: '/_authenticated/social/u/$username'
       path: '/u/$username'
@@ -981,20 +961,6 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
   ServicesRouteChildren,
 )
 
-interface RenoridesDevisArtisanIdRouteChildren {
-  RenoridesDevisArtisanIdAttenteRoute: typeof RenoridesDevisArtisanIdAttenteRoute
-}
-
-const RenoridesDevisArtisanIdRouteChildren: RenoridesDevisArtisanIdRouteChildren =
-  {
-    RenoridesDevisArtisanIdAttenteRoute: RenoridesDevisArtisanIdAttenteRoute,
-  }
-
-const RenoridesDevisArtisanIdRouteWithChildren =
-  RenoridesDevisArtisanIdRoute._addFileChildren(
-    RenoridesDevisArtisanIdRouteChildren,
-  )
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
@@ -1002,8 +968,18 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRouteWithChildren,
   AppRenoridesRoute: AppRenoridesRoute,
-  RenoridesDevisArtisanIdRoute: RenoridesDevisArtisanIdRouteWithChildren,
+  RenoridesDevisArtisanIdRoute: RenoridesDevisArtisanIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
