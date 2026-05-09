@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as BatidiasRouteImport } from './routes/batidias'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
@@ -66,6 +67,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BatidiasRoute = BatidiasRouteImport.update({
+  id: '/batidias',
+  path: '/batidias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -309,6 +315,7 @@ const AuthenticatedSocialTagHashtagRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/batidias': typeof BatidiasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/social': typeof AuthenticatedSocialRouteWithChildren
@@ -358,6 +365,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/batidias': typeof BatidiasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/app/renorides': typeof AppRenoridesRoute
@@ -408,6 +416,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
+  '/batidias': typeof BatidiasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/_authenticated/social': typeof AuthenticatedSocialRouteWithChildren
@@ -459,6 +468,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/batidias'
     | '/reset-password'
     | '/services'
     | '/social'
@@ -508,6 +518,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/batidias'
     | '/reset-password'
     | '/services'
     | '/app/renorides'
@@ -557,6 +568,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/batidias'
     | '/reset-password'
     | '/services'
     | '/_authenticated/social'
@@ -608,6 +620,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BatidiasRoute: typeof BatidiasRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   AppRenoridesRoute: typeof AppRenoridesRoute
@@ -633,6 +646,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/batidias': {
+      id: '/batidias'
+      path: '/batidias'
+      fullPath: '/batidias'
+      preLoaderRoute: typeof BatidiasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1065,6 +1085,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
+  BatidiasRoute: BatidiasRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRouteWithChildren,
   AppRenoridesRoute: AppRenoridesRoute,
@@ -1078,13 +1099,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

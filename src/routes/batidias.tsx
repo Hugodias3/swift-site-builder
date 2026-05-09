@@ -555,8 +555,8 @@ function Process() {
           }}
         >
           {steps.map((s, i) => (
-            <>
-              <div key={s.n} style={{ textAlign: "center" }}>
+            <Fragment key={s.n}>
+              <div style={{ textAlign: "center" }}>
                 <div
                   style={{
                     width: 64,
