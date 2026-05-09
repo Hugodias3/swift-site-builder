@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-export function NonMemberModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function NonMemberModal({ open, onClose, onGrant }: { open: boolean; onClose: () => void; onGrant?: () => void }) {
   if (!open) return null;
   return (
     <div
