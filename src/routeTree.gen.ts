@@ -9,38 +9,110 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesRenoridesRouteImport } from './routes/services.renorides'
+import { Route as ServicesGardeFlashRouteImport } from './routes/services.garde-flash'
+import { Route as ServicesBatirenovRouteImport } from './routes/services.batirenov'
+import { Route as ServicesBatidiasRouteImport } from './routes/services.batidias'
 
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRenoridesRoute = ServicesRenoridesRouteImport.update({
+  id: '/renorides',
+  path: '/renorides',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesGardeFlashRoute = ServicesGardeFlashRouteImport.update({
+  id: '/garde-flash',
+  path: '/garde-flash',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesBatirenovRoute = ServicesBatirenovRouteImport.update({
+  id: '/batirenov',
+  path: '/batirenov',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesBatidiasRoute = ServicesBatidiasRouteImport.update({
+  id: '/batidias',
+  path: '/batidias',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/batidias': typeof ServicesBatidiasRoute
+  '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/renorides': typeof ServicesRenoridesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/batidias': typeof ServicesBatidiasRoute
+  '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/renorides': typeof ServicesRenoridesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/services': typeof ServicesRouteWithChildren
+  '/services/batidias': typeof ServicesBatidiasRoute
+  '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/renorides': typeof ServicesRenoridesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/services'
+    | '/services/batidias'
+    | '/services/batirenov'
+    | '/services/garde-flash'
+    | '/services/renorides'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/services'
+    | '/services/batidias'
+    | '/services/batirenov'
+    | '/services/garde-flash'
+    | '/services/renorides'
+  id:
+    | '__root__'
+    | '/'
+    | '/services'
+    | '/services/batidias'
+    | '/services/batirenov'
+    | '/services/garde-flash'
+    | '/services/renorides'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ServicesRoute: typeof ServicesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +120,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/renorides': {
+      id: '/services/renorides'
+      path: '/renorides'
+      fullPath: '/services/renorides'
+      preLoaderRoute: typeof ServicesRenoridesRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/garde-flash': {
+      id: '/services/garde-flash'
+      path: '/garde-flash'
+      fullPath: '/services/garde-flash'
+      preLoaderRoute: typeof ServicesGardeFlashRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/batirenov': {
+      id: '/services/batirenov'
+      path: '/batirenov'
+      fullPath: '/services/batirenov'
+      preLoaderRoute: typeof ServicesBatirenovRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/batidias': {
+      id: '/services/batidias'
+      path: '/batidias'
+      fullPath: '/services/batidias'
+      preLoaderRoute: typeof ServicesBatidiasRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
+interface ServicesRouteChildren {
+  ServicesBatidiasRoute: typeof ServicesBatidiasRoute
+  ServicesBatirenovRoute: typeof ServicesBatirenovRoute
+  ServicesGardeFlashRoute: typeof ServicesGardeFlashRoute
+  ServicesRenoridesRoute: typeof ServicesRenoridesRoute
+}
+
+const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesBatidiasRoute: ServicesBatidiasRoute,
+  ServicesBatirenovRoute: ServicesBatirenovRoute,
+  ServicesGardeFlashRoute: ServicesGardeFlashRoute,
+  ServicesRenoridesRoute: ServicesRenoridesRoute,
+}
+
+const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
+  ServicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ServicesRoute: ServicesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
