@@ -395,8 +395,13 @@ function BottomSheet({
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-50 pointer-events-auto flex flex-col"
+      className="pointer-events-auto flex flex-col"
       style={{
+        position: "fixed",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10000,
         height: `${heightVh}vh`,
         transform: `translateY(${dragOffset}px)`,
         background: "#0D0F12",
@@ -406,6 +411,7 @@ function BottomSheet({
         boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
         transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
         animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
+        willChange: "transform",
       }}
     >
       <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
