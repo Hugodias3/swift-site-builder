@@ -11,10 +11,34 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesTournoiMensuelRouteImport } from './routes/services.tournoi-mensuel'
+import { Route as ServicesTirageParrainageRouteImport } from './routes/services.tirage-parrainage'
+import { Route as ServicesStandTirRouteImport } from './routes/services.stand-tir'
+import { Route as ServicesSportsRouteImport } from './routes/services.sports'
+import { Route as ServicesSoireesRouteImport } from './routes/services.soirees'
+import { Route as ServicesServicesPratiquesRouteImport } from './routes/services.services-pratiques'
+import { Route as ServicesSecretsRouteImport } from './routes/services.secrets'
+import { Route as ServicesReseauSocialRouteImport } from './routes/services.reseau-social'
 import { Route as ServicesRenoridesRouteImport } from './routes/services.renorides'
+import { Route as ServicesPodcastRouteImport } from './routes/services.podcast'
+import { Route as ServicesMasterclassRouteImport } from './routes/services.masterclass'
+import { Route as ServicesLivresEnfantsRouteImport } from './routes/services.livres-enfants'
+import { Route as ServicesLesLoupsRouteImport } from './routes/services.les-loups'
 import { Route as ServicesGardeFlashRouteImport } from './routes/services.garde-flash'
+import { Route as ServicesFormationIaRouteImport } from './routes/services.formation-ia'
+import { Route as ServicesFinanceRouteImport } from './routes/services.finance'
+import { Route as ServicesEspaceFoiRouteImport } from './routes/services.espace-foi'
+import { Route as ServicesEntraideUrgenceRouteImport } from './routes/services.entraide-urgence'
+import { Route as ServicesClasseScolaireRouteImport } from './routes/services.classe-scolaire'
+import { Route as ServicesCapillaireRouteImport } from './routes/services.capillaire'
+import { Route as ServicesCadreLegalRouteImport } from './routes/services.cadre-legal'
+import { Route as ServicesBeauteIaRouteImport } from './routes/services.beaute-ia'
 import { Route as ServicesBatirenovRouteImport } from './routes/services.batirenov'
 import { Route as ServicesBatidiasRouteImport } from './routes/services.batidias'
+import { Route as ServicesBarbiersRouteImport } from './routes/services.barbiers'
+import { Route as ServicesAutoMotoRouteImport } from './routes/services.auto-moto'
+import { Route as ServicesArtsMartiauxRouteImport } from './routes/services.arts-martiaux'
+import { Route as ServicesAideDevoirsRouteImport } from './routes/services.aide-devoirs'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -26,14 +50,116 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesTournoiMensuelRoute = ServicesTournoiMensuelRouteImport.update({
+  id: '/tournoi-mensuel',
+  path: '/tournoi-mensuel',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesTirageParrainageRoute =
+  ServicesTirageParrainageRouteImport.update({
+    id: '/tirage-parrainage',
+    path: '/tirage-parrainage',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesStandTirRoute = ServicesStandTirRouteImport.update({
+  id: '/stand-tir',
+  path: '/stand-tir',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesSportsRoute = ServicesSportsRouteImport.update({
+  id: '/sports',
+  path: '/sports',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesSoireesRoute = ServicesSoireesRouteImport.update({
+  id: '/soirees',
+  path: '/soirees',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesServicesPratiquesRoute =
+  ServicesServicesPratiquesRouteImport.update({
+    id: '/services-pratiques',
+    path: '/services-pratiques',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesSecretsRoute = ServicesSecretsRouteImport.update({
+  id: '/secrets',
+  path: '/secrets',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesReseauSocialRoute = ServicesReseauSocialRouteImport.update({
+  id: '/reseau-social',
+  path: '/reseau-social',
+  getParentRoute: () => ServicesRoute,
+} as any)
 const ServicesRenoridesRoute = ServicesRenoridesRouteImport.update({
   id: '/renorides',
   path: '/renorides',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesPodcastRoute = ServicesPodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesMasterclassRoute = ServicesMasterclassRouteImport.update({
+  id: '/masterclass',
+  path: '/masterclass',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesLivresEnfantsRoute = ServicesLivresEnfantsRouteImport.update({
+  id: '/livres-enfants',
+  path: '/livres-enfants',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesLesLoupsRoute = ServicesLesLoupsRouteImport.update({
+  id: '/les-loups',
+  path: '/les-loups',
+  getParentRoute: () => ServicesRoute,
+} as any)
 const ServicesGardeFlashRoute = ServicesGardeFlashRouteImport.update({
   id: '/garde-flash',
   path: '/garde-flash',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesFormationIaRoute = ServicesFormationIaRouteImport.update({
+  id: '/formation-ia',
+  path: '/formation-ia',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesFinanceRoute = ServicesFinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesEspaceFoiRoute = ServicesEspaceFoiRouteImport.update({
+  id: '/espace-foi',
+  path: '/espace-foi',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesEntraideUrgenceRoute = ServicesEntraideUrgenceRouteImport.update({
+  id: '/entraide-urgence',
+  path: '/entraide-urgence',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesClasseScolaireRoute = ServicesClasseScolaireRouteImport.update({
+  id: '/classe-scolaire',
+  path: '/classe-scolaire',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesCapillaireRoute = ServicesCapillaireRouteImport.update({
+  id: '/capillaire',
+  path: '/capillaire',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesCadreLegalRoute = ServicesCadreLegalRouteImport.update({
+  id: '/cadre-legal',
+  path: '/cadre-legal',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesBeauteIaRoute = ServicesBeauteIaRouteImport.update({
+  id: '/beaute-ia',
+  path: '/beaute-ia',
   getParentRoute: () => ServicesRoute,
 } as any)
 const ServicesBatirenovRoute = ServicesBatirenovRouteImport.update({
@@ -46,57 +172,221 @@ const ServicesBatidiasRoute = ServicesBatidiasRouteImport.update({
   path: '/batidias',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesBarbiersRoute = ServicesBarbiersRouteImport.update({
+  id: '/barbiers',
+  path: '/barbiers',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesAutoMotoRoute = ServicesAutoMotoRouteImport.update({
+  id: '/auto-moto',
+  path: '/auto-moto',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesArtsMartiauxRoute = ServicesArtsMartiauxRouteImport.update({
+  id: '/arts-martiaux',
+  path: '/arts-martiaux',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesAideDevoirsRoute = ServicesAideDevoirsRouteImport.update({
+  id: '/aide-devoirs',
+  path: '/aide-devoirs',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/services': typeof ServicesRouteWithChildren
+  '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
+  '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
+  '/services/auto-moto': typeof ServicesAutoMotoRoute
+  '/services/barbiers': typeof ServicesBarbiersRoute
   '/services/batidias': typeof ServicesBatidiasRoute
   '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/beaute-ia': typeof ServicesBeauteIaRoute
+  '/services/cadre-legal': typeof ServicesCadreLegalRoute
+  '/services/capillaire': typeof ServicesCapillaireRoute
+  '/services/classe-scolaire': typeof ServicesClasseScolaireRoute
+  '/services/entraide-urgence': typeof ServicesEntraideUrgenceRoute
+  '/services/espace-foi': typeof ServicesEspaceFoiRoute
+  '/services/finance': typeof ServicesFinanceRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/les-loups': typeof ServicesLesLoupsRoute
+  '/services/livres-enfants': typeof ServicesLivresEnfantsRoute
+  '/services/masterclass': typeof ServicesMasterclassRoute
+  '/services/podcast': typeof ServicesPodcastRoute
   '/services/renorides': typeof ServicesRenoridesRoute
+  '/services/reseau-social': typeof ServicesReseauSocialRoute
+  '/services/secrets': typeof ServicesSecretsRoute
+  '/services/services-pratiques': typeof ServicesServicesPratiquesRoute
+  '/services/soirees': typeof ServicesSoireesRoute
+  '/services/sports': typeof ServicesSportsRoute
+  '/services/stand-tir': typeof ServicesStandTirRoute
+  '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
+  '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/services': typeof ServicesRouteWithChildren
+  '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
+  '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
+  '/services/auto-moto': typeof ServicesAutoMotoRoute
+  '/services/barbiers': typeof ServicesBarbiersRoute
   '/services/batidias': typeof ServicesBatidiasRoute
   '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/beaute-ia': typeof ServicesBeauteIaRoute
+  '/services/cadre-legal': typeof ServicesCadreLegalRoute
+  '/services/capillaire': typeof ServicesCapillaireRoute
+  '/services/classe-scolaire': typeof ServicesClasseScolaireRoute
+  '/services/entraide-urgence': typeof ServicesEntraideUrgenceRoute
+  '/services/espace-foi': typeof ServicesEspaceFoiRoute
+  '/services/finance': typeof ServicesFinanceRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/les-loups': typeof ServicesLesLoupsRoute
+  '/services/livres-enfants': typeof ServicesLivresEnfantsRoute
+  '/services/masterclass': typeof ServicesMasterclassRoute
+  '/services/podcast': typeof ServicesPodcastRoute
   '/services/renorides': typeof ServicesRenoridesRoute
+  '/services/reseau-social': typeof ServicesReseauSocialRoute
+  '/services/secrets': typeof ServicesSecretsRoute
+  '/services/services-pratiques': typeof ServicesServicesPratiquesRoute
+  '/services/soirees': typeof ServicesSoireesRoute
+  '/services/sports': typeof ServicesSportsRoute
+  '/services/stand-tir': typeof ServicesStandTirRoute
+  '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
+  '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/services': typeof ServicesRouteWithChildren
+  '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
+  '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
+  '/services/auto-moto': typeof ServicesAutoMotoRoute
+  '/services/barbiers': typeof ServicesBarbiersRoute
   '/services/batidias': typeof ServicesBatidiasRoute
   '/services/batirenov': typeof ServicesBatirenovRoute
+  '/services/beaute-ia': typeof ServicesBeauteIaRoute
+  '/services/cadre-legal': typeof ServicesCadreLegalRoute
+  '/services/capillaire': typeof ServicesCapillaireRoute
+  '/services/classe-scolaire': typeof ServicesClasseScolaireRoute
+  '/services/entraide-urgence': typeof ServicesEntraideUrgenceRoute
+  '/services/espace-foi': typeof ServicesEspaceFoiRoute
+  '/services/finance': typeof ServicesFinanceRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/garde-flash': typeof ServicesGardeFlashRoute
+  '/services/les-loups': typeof ServicesLesLoupsRoute
+  '/services/livres-enfants': typeof ServicesLivresEnfantsRoute
+  '/services/masterclass': typeof ServicesMasterclassRoute
+  '/services/podcast': typeof ServicesPodcastRoute
   '/services/renorides': typeof ServicesRenoridesRoute
+  '/services/reseau-social': typeof ServicesReseauSocialRoute
+  '/services/secrets': typeof ServicesSecretsRoute
+  '/services/services-pratiques': typeof ServicesServicesPratiquesRoute
+  '/services/soirees': typeof ServicesSoireesRoute
+  '/services/sports': typeof ServicesSportsRoute
+  '/services/stand-tir': typeof ServicesStandTirRoute
+  '/services/tirage-parrainage': typeof ServicesTirageParrainageRoute
+  '/services/tournoi-mensuel': typeof ServicesTournoiMensuelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/services'
+    | '/services/aide-devoirs'
+    | '/services/arts-martiaux'
+    | '/services/auto-moto'
+    | '/services/barbiers'
     | '/services/batidias'
     | '/services/batirenov'
+    | '/services/beaute-ia'
+    | '/services/cadre-legal'
+    | '/services/capillaire'
+    | '/services/classe-scolaire'
+    | '/services/entraide-urgence'
+    | '/services/espace-foi'
+    | '/services/finance'
+    | '/services/formation-ia'
     | '/services/garde-flash'
+    | '/services/les-loups'
+    | '/services/livres-enfants'
+    | '/services/masterclass'
+    | '/services/podcast'
     | '/services/renorides'
+    | '/services/reseau-social'
+    | '/services/secrets'
+    | '/services/services-pratiques'
+    | '/services/soirees'
+    | '/services/sports'
+    | '/services/stand-tir'
+    | '/services/tirage-parrainage'
+    | '/services/tournoi-mensuel'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/services'
+    | '/services/aide-devoirs'
+    | '/services/arts-martiaux'
+    | '/services/auto-moto'
+    | '/services/barbiers'
     | '/services/batidias'
     | '/services/batirenov'
+    | '/services/beaute-ia'
+    | '/services/cadre-legal'
+    | '/services/capillaire'
+    | '/services/classe-scolaire'
+    | '/services/entraide-urgence'
+    | '/services/espace-foi'
+    | '/services/finance'
+    | '/services/formation-ia'
     | '/services/garde-flash'
+    | '/services/les-loups'
+    | '/services/livres-enfants'
+    | '/services/masterclass'
+    | '/services/podcast'
     | '/services/renorides'
+    | '/services/reseau-social'
+    | '/services/secrets'
+    | '/services/services-pratiques'
+    | '/services/soirees'
+    | '/services/sports'
+    | '/services/stand-tir'
+    | '/services/tirage-parrainage'
+    | '/services/tournoi-mensuel'
   id:
     | '__root__'
     | '/'
     | '/services'
+    | '/services/aide-devoirs'
+    | '/services/arts-martiaux'
+    | '/services/auto-moto'
+    | '/services/barbiers'
     | '/services/batidias'
     | '/services/batirenov'
+    | '/services/beaute-ia'
+    | '/services/cadre-legal'
+    | '/services/capillaire'
+    | '/services/classe-scolaire'
+    | '/services/entraide-urgence'
+    | '/services/espace-foi'
+    | '/services/finance'
+    | '/services/formation-ia'
     | '/services/garde-flash'
+    | '/services/les-loups'
+    | '/services/livres-enfants'
+    | '/services/masterclass'
+    | '/services/podcast'
     | '/services/renorides'
+    | '/services/reseau-social'
+    | '/services/secrets'
+    | '/services/services-pratiques'
+    | '/services/soirees'
+    | '/services/sports'
+    | '/services/stand-tir'
+    | '/services/tirage-parrainage'
+    | '/services/tournoi-mensuel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -120,6 +410,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/tournoi-mensuel': {
+      id: '/services/tournoi-mensuel'
+      path: '/tournoi-mensuel'
+      fullPath: '/services/tournoi-mensuel'
+      preLoaderRoute: typeof ServicesTournoiMensuelRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/tirage-parrainage': {
+      id: '/services/tirage-parrainage'
+      path: '/tirage-parrainage'
+      fullPath: '/services/tirage-parrainage'
+      preLoaderRoute: typeof ServicesTirageParrainageRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/stand-tir': {
+      id: '/services/stand-tir'
+      path: '/stand-tir'
+      fullPath: '/services/stand-tir'
+      preLoaderRoute: typeof ServicesStandTirRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/sports': {
+      id: '/services/sports'
+      path: '/sports'
+      fullPath: '/services/sports'
+      preLoaderRoute: typeof ServicesSportsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/soirees': {
+      id: '/services/soirees'
+      path: '/soirees'
+      fullPath: '/services/soirees'
+      preLoaderRoute: typeof ServicesSoireesRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/services-pratiques': {
+      id: '/services/services-pratiques'
+      path: '/services-pratiques'
+      fullPath: '/services/services-pratiques'
+      preLoaderRoute: typeof ServicesServicesPratiquesRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/secrets': {
+      id: '/services/secrets'
+      path: '/secrets'
+      fullPath: '/services/secrets'
+      preLoaderRoute: typeof ServicesSecretsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/reseau-social': {
+      id: '/services/reseau-social'
+      path: '/reseau-social'
+      fullPath: '/services/reseau-social'
+      preLoaderRoute: typeof ServicesReseauSocialRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/services/renorides': {
       id: '/services/renorides'
       path: '/renorides'
@@ -127,11 +473,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRenoridesRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/podcast': {
+      id: '/services/podcast'
+      path: '/podcast'
+      fullPath: '/services/podcast'
+      preLoaderRoute: typeof ServicesPodcastRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/masterclass': {
+      id: '/services/masterclass'
+      path: '/masterclass'
+      fullPath: '/services/masterclass'
+      preLoaderRoute: typeof ServicesMasterclassRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/livres-enfants': {
+      id: '/services/livres-enfants'
+      path: '/livres-enfants'
+      fullPath: '/services/livres-enfants'
+      preLoaderRoute: typeof ServicesLivresEnfantsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/les-loups': {
+      id: '/services/les-loups'
+      path: '/les-loups'
+      fullPath: '/services/les-loups'
+      preLoaderRoute: typeof ServicesLesLoupsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/services/garde-flash': {
       id: '/services/garde-flash'
       path: '/garde-flash'
       fullPath: '/services/garde-flash'
       preLoaderRoute: typeof ServicesGardeFlashRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/formation-ia': {
+      id: '/services/formation-ia'
+      path: '/formation-ia'
+      fullPath: '/services/formation-ia'
+      preLoaderRoute: typeof ServicesFormationIaRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/finance': {
+      id: '/services/finance'
+      path: '/finance'
+      fullPath: '/services/finance'
+      preLoaderRoute: typeof ServicesFinanceRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/espace-foi': {
+      id: '/services/espace-foi'
+      path: '/espace-foi'
+      fullPath: '/services/espace-foi'
+      preLoaderRoute: typeof ServicesEspaceFoiRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/entraide-urgence': {
+      id: '/services/entraide-urgence'
+      path: '/entraide-urgence'
+      fullPath: '/services/entraide-urgence'
+      preLoaderRoute: typeof ServicesEntraideUrgenceRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/classe-scolaire': {
+      id: '/services/classe-scolaire'
+      path: '/classe-scolaire'
+      fullPath: '/services/classe-scolaire'
+      preLoaderRoute: typeof ServicesClasseScolaireRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/capillaire': {
+      id: '/services/capillaire'
+      path: '/capillaire'
+      fullPath: '/services/capillaire'
+      preLoaderRoute: typeof ServicesCapillaireRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/cadre-legal': {
+      id: '/services/cadre-legal'
+      path: '/cadre-legal'
+      fullPath: '/services/cadre-legal'
+      preLoaderRoute: typeof ServicesCadreLegalRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/beaute-ia': {
+      id: '/services/beaute-ia'
+      path: '/beaute-ia'
+      fullPath: '/services/beaute-ia'
+      preLoaderRoute: typeof ServicesBeauteIaRouteImport
       parentRoute: typeof ServicesRoute
     }
     '/services/batirenov': {
@@ -148,21 +578,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesBatidiasRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/barbiers': {
+      id: '/services/barbiers'
+      path: '/barbiers'
+      fullPath: '/services/barbiers'
+      preLoaderRoute: typeof ServicesBarbiersRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/auto-moto': {
+      id: '/services/auto-moto'
+      path: '/auto-moto'
+      fullPath: '/services/auto-moto'
+      preLoaderRoute: typeof ServicesAutoMotoRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/arts-martiaux': {
+      id: '/services/arts-martiaux'
+      path: '/arts-martiaux'
+      fullPath: '/services/arts-martiaux'
+      preLoaderRoute: typeof ServicesArtsMartiauxRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/aide-devoirs': {
+      id: '/services/aide-devoirs'
+      path: '/aide-devoirs'
+      fullPath: '/services/aide-devoirs'
+      preLoaderRoute: typeof ServicesAideDevoirsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
 interface ServicesRouteChildren {
+  ServicesAideDevoirsRoute: typeof ServicesAideDevoirsRoute
+  ServicesArtsMartiauxRoute: typeof ServicesArtsMartiauxRoute
+  ServicesAutoMotoRoute: typeof ServicesAutoMotoRoute
+  ServicesBarbiersRoute: typeof ServicesBarbiersRoute
   ServicesBatidiasRoute: typeof ServicesBatidiasRoute
   ServicesBatirenovRoute: typeof ServicesBatirenovRoute
+  ServicesBeauteIaRoute: typeof ServicesBeauteIaRoute
+  ServicesCadreLegalRoute: typeof ServicesCadreLegalRoute
+  ServicesCapillaireRoute: typeof ServicesCapillaireRoute
+  ServicesClasseScolaireRoute: typeof ServicesClasseScolaireRoute
+  ServicesEntraideUrgenceRoute: typeof ServicesEntraideUrgenceRoute
+  ServicesEspaceFoiRoute: typeof ServicesEspaceFoiRoute
+  ServicesFinanceRoute: typeof ServicesFinanceRoute
+  ServicesFormationIaRoute: typeof ServicesFormationIaRoute
   ServicesGardeFlashRoute: typeof ServicesGardeFlashRoute
+  ServicesLesLoupsRoute: typeof ServicesLesLoupsRoute
+  ServicesLivresEnfantsRoute: typeof ServicesLivresEnfantsRoute
+  ServicesMasterclassRoute: typeof ServicesMasterclassRoute
+  ServicesPodcastRoute: typeof ServicesPodcastRoute
   ServicesRenoridesRoute: typeof ServicesRenoridesRoute
+  ServicesReseauSocialRoute: typeof ServicesReseauSocialRoute
+  ServicesSecretsRoute: typeof ServicesSecretsRoute
+  ServicesServicesPratiquesRoute: typeof ServicesServicesPratiquesRoute
+  ServicesSoireesRoute: typeof ServicesSoireesRoute
+  ServicesSportsRoute: typeof ServicesSportsRoute
+  ServicesStandTirRoute: typeof ServicesStandTirRoute
+  ServicesTirageParrainageRoute: typeof ServicesTirageParrainageRoute
+  ServicesTournoiMensuelRoute: typeof ServicesTournoiMensuelRoute
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesAideDevoirsRoute: ServicesAideDevoirsRoute,
+  ServicesArtsMartiauxRoute: ServicesArtsMartiauxRoute,
+  ServicesAutoMotoRoute: ServicesAutoMotoRoute,
+  ServicesBarbiersRoute: ServicesBarbiersRoute,
   ServicesBatidiasRoute: ServicesBatidiasRoute,
   ServicesBatirenovRoute: ServicesBatirenovRoute,
+  ServicesBeauteIaRoute: ServicesBeauteIaRoute,
+  ServicesCadreLegalRoute: ServicesCadreLegalRoute,
+  ServicesCapillaireRoute: ServicesCapillaireRoute,
+  ServicesClasseScolaireRoute: ServicesClasseScolaireRoute,
+  ServicesEntraideUrgenceRoute: ServicesEntraideUrgenceRoute,
+  ServicesEspaceFoiRoute: ServicesEspaceFoiRoute,
+  ServicesFinanceRoute: ServicesFinanceRoute,
+  ServicesFormationIaRoute: ServicesFormationIaRoute,
   ServicesGardeFlashRoute: ServicesGardeFlashRoute,
+  ServicesLesLoupsRoute: ServicesLesLoupsRoute,
+  ServicesLivresEnfantsRoute: ServicesLivresEnfantsRoute,
+  ServicesMasterclassRoute: ServicesMasterclassRoute,
+  ServicesPodcastRoute: ServicesPodcastRoute,
   ServicesRenoridesRoute: ServicesRenoridesRoute,
+  ServicesReseauSocialRoute: ServicesReseauSocialRoute,
+  ServicesSecretsRoute: ServicesSecretsRoute,
+  ServicesServicesPratiquesRoute: ServicesServicesPratiquesRoute,
+  ServicesSoireesRoute: ServicesSoireesRoute,
+  ServicesSportsRoute: ServicesSportsRoute,
+  ServicesStandTirRoute: ServicesStandTirRoute,
+  ServicesTirageParrainageRoute: ServicesTirageParrainageRoute,
+  ServicesTournoiMensuelRoute: ServicesTournoiMensuelRoute,
 }
 
 const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
