@@ -13,6 +13,10 @@ export const Route = createFileRoute("/app/renorides")({
 });
 
 import { ARTISANS, type Artisan, type Status } from "@/data/renorides-artisans";
+import { BottomNav } from "@/components/renorides/BottomNav";
+import { NonMemberModal } from "@/components/renorides/NonMemberModal";
+
+const IS_MEMBER = false; // demo: non-membre par défaut
 
 const FILTERS = [
   { key: "all", label: "Tous", emoji: "" },
