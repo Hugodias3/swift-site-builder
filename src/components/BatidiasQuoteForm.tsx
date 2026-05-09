@@ -1,7 +1,9 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import saintCloud from "@/assets/batidias-saint-cloud.jpg";
 import paris8 from "@/assets/batidias-paris8.jpg";
 import logo from "@/assets/batidias-logo.jpg";
+import { EMAILJS_CONFIG, isEmailJsConfigured } from "@/lib/emailjs-config";
 
 const projectTypes = [
   "Rénovation complète appartement",
