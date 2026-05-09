@@ -484,12 +484,14 @@ function BottomSheet({
           </div>
 
           <div className="mt-6 flex flex-col gap-2.5">
-            <button
-              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
+            <Link
+              to="/renorides/devis/$artisanId"
+              params={{ artisanId: artisan.id }}
+              className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition flex items-center justify-center"
               style={{ background: "#C8521A", color: "#FFFFFF" }}
             >
               Demander un devis
-            </button>
+            </Link>
             <button
               className="w-full h-12 rounded-xl font-display font-bold text-[14px] uppercase tracking-wider active:scale-[0.99] transition"
               style={{ background: "transparent", border: "1px solid #C8521A", color: "#C8521A" }}
