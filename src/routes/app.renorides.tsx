@@ -118,6 +118,11 @@ function RenoRidesApp() {
   const [filter, setFilter] = useState("all");
   const [urgent, setUrgent] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const dragRef = useRef<{ startY: number; startExpanded: boolean } | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const selected = ARTISANS.find((a) => a.id === selectedId) || null;
 
   useEffect(() => {
     let alive = true;
