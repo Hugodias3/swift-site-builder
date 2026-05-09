@@ -182,6 +182,15 @@ function Index() {
               </div>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-3 px-8 py-4 border border-rust text-rust font-bold uppercase tracking-widest hover:bg-rust hover:text-primary-foreground transition"
+            >
+              Voir les 34 services <span className="text-xl">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
