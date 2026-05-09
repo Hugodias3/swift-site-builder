@@ -26,40 +26,41 @@ const categories = [
     title: "Urgences & Maison",
     desc: "Quand la chaudière lâche un dimanche soir. Quand la nounou annule à 7h. Les bons réflexes, les bons artisans, les bons réseaux.",
     services: [
-      { name: "RenoRides Urgence", to: "/services/renorides", desc: "Artisans géolocalisés vérifiés (KBIS, RC Pro)." },
-      { name: "Garde d'Urgence Flash", to: "/services/garde-flash", desc: "Nounous vérifiées. Disponibles en 2h." },
+      { name: "RenoRides Urgence", to: "/services/renorides", desc: "Artisans géolocalisés vérifiés." },
+      { name: "Garde d'Urgence Flash", to: "/services/garde-flash", desc: "Nounous vérifiées, dispo en 2h." },
       { name: "BATIDIAS", to: "/services/batidias", desc: "Devis travaux gratuit sous 48h." },
-      { name: "BATIRENOV", to: "/services/batirenov", desc: "Conducteur de travaux + accompagnement DIY." },
+      { name: "BATIRENOV", to: "/services/batirenov", desc: "Conducteur de travaux + DIY." },
     ],
-    available: true,
   },
   {
     slug: "communaute",
     title: "Communauté & Social",
     desc: "Un fil. Des groupes. Des hommes vrais. Pas un réseau de plus — le seul fait pour des pères.",
     services: [
-      { name: "Réseau social général", desc: "Fil principal, discussions, partage." },
-      { name: "Les Loups", desc: "Rencontres, célibat, dating post-divorce." },
-      { name: "Classe Scolaire", desc: "Groupes privés par classe." },
-      { name: "Espace Foi", desc: "Multi-confessionnel, optionnel." },
-      { name: "Entraide Urgence", desc: "Besoin d'aide maintenant." },
-      { name: "Finance & Investissement", desc: "Éducatif, CGP agréés ORIAS." },
+      { name: "Réseau Social", to: "/services/reseau-social", desc: "Le fil pensé pour des pères." },
+      { name: "Les Loups", to: "/services/les-loups", desc: "Dating post-divorce." },
+      { name: "Classe Scolaire", to: "/services/classe-scolaire", desc: "Groupes privés par classe." },
+      { name: "Espace Foi", to: "/services/espace-foi", desc: "Multi-confessionnel, optionnel." },
+      { name: "Entraide Urgence", to: "/services/entraide-urgence", desc: "Besoin d'aide maintenant." },
+      { name: "Finance & Investissement", to: "/services/finance", desc: "Éducatif, CGP agréés ORIAS." },
     ],
   },
   {
     slug: "secrets",
     title: "Les Secrets",
     desc: "Le confessionnal numérique. Anonyme. 500 caractères. 6 réactions. Aucun commentaire.",
-    services: [{ name: "Confessionnal anonyme", desc: "Modération IA pour détecter les signaux de détresse." }],
+    services: [
+      { name: "Confessionnal anonyme", to: "/services/secrets", desc: "500 caractères, 6 réactions, aucun débat." },
+    ],
   },
   {
     slug: "sport-soirees",
     title: "Sport, Soirées & Activités",
     desc: "12 sports. 6 formats de soirées. Un tournoi mensuel. Des hommes qui se voient en vrai.",
     services: [
-      { name: "12 sports", desc: "Padel, foot 5, golf, tennis, boxe, escalade…" },
-      { name: "Tournoi Mensuel RePère", desc: "32 pères max/ville. Trophée + soirée." },
-      { name: "Gaming, Whisky, Stand-up, Poker…", desc: "6 formats récurrents." },
+      { name: "12 sports", to: "/services/sports", desc: "Padel, foot 5, golf, tennis, boxe…" },
+      { name: "Tournoi Mensuel RePère", to: "/services/tournoi-mensuel", desc: "32 pères max/ville, trophée + soirée." },
+      { name: "Soirées RePère", to: "/services/soirees", desc: "Gaming, Whisky, Stand-up, Poker…" },
     ],
   },
   {
@@ -67,9 +68,9 @@ const categories = [
     title: "Espace Défense",
     desc: "MMA, JJB, Boxe, tir agréé. Le cadre légal, expliqué par un juriste. Protéger les siens — proprement.",
     services: [
-      { name: "Clubs MMA · JJB · Boxe", desc: "Partenaires certifiés. Affiliation 8-12%." },
-      { name: "Stands de tir agréés", desc: "Réservation in-app, -15% membres." },
-      { name: "Cadre légal expliqué", desc: "Juriste partenaire." },
+      { name: "MMA · JJB · Boxe", to: "/services/arts-martiaux", desc: "Clubs certifiés. -15% membres." },
+      { name: "Stands de tir", to: "/services/stand-tir", desc: "Agréés FFTir. Réservation in-app." },
+      { name: "Cadre légal", to: "/services/cadre-legal", desc: "Ce qu'on a le droit ou non." },
     ],
   },
   {
@@ -77,20 +78,20 @@ const categories = [
     title: "Beauté & Capillaire",
     desc: "L'IA analyse ta peau, ton cheveu. Routine personnalisée. Barbiers partenaires partout en France.",
     services: [
-      { name: "Beauté IA Soin", desc: "Photo → analyse → routine." },
-      { name: "Barbiers partenaires", desc: "Géolocalisés. -20% Fondateur." },
-      { name: "Capillaire", desc: "Greffe, micropigmentation, prothèse." },
+      { name: "Beauté IA Soin", to: "/services/beaute-ia", desc: "Photo → analyse → routine." },
+      { name: "Barbiers partenaires", to: "/services/barbiers", desc: "Géolocalisés. -20% Fondateur." },
+      { name: "Capillaire", to: "/services/capillaire", desc: "Greffe, micropigmentation, prothèse." },
     ],
   },
   {
     slug: "contenu-formation",
     title: "Contenu & Formation",
-    desc: "Podcast hebdo. Formation IA Qualiopi finançable CPF. Aide aux devoirs de tes gosses.",
+    desc: "Podcast hebdo. Formation IA Qualiopi finançable CPF. Aide aux devoirs de tes gosses. Masterclass.",
     services: [
-      { name: "Podcast hebdo", desc: "Chaque jeudi. Format Guillaume Play." },
-      { name: "Formation IA Qualiopi", desc: "CPF finançable. 197-297€." },
-      { name: "Aide aux Devoirs IA", desc: "Méthode, pas réponse. CE2 → Terminale." },
-      { name: "Masterclass Pères Leaders", desc: "8 sessions. Accès vie entière." },
+      { name: "Podcast hebdo", to: "/services/podcast", desc: "Chaque jeudi." },
+      { name: "Formation IA Qualiopi", to: "/services/formation-ia", desc: "CPF finançable. 197-297€." },
+      { name: "Aide aux Devoirs IA", to: "/services/aide-devoirs", desc: "Méthode, pas réponse." },
+      { name: "Masterclass Pères Leaders", to: "/services/masterclass", desc: "8 sessions, accès vie entière." },
     ],
   },
   {
@@ -98,8 +99,31 @@ const categories = [
     title: "Auto & Moto",
     desc: "Le test du père. Est-ce que la poussette rentre ? L'angle que personne ne fait.",
     services: [
-      { name: "Le test du père", desc: "Tests vidéo SUV famille, moto, électrique." },
-      { name: "LOA / LLD partenaires", desc: "Commission 250-500€/contrat." },
+      { name: "Auto & Moto", to: "/services/auto-moto", desc: "Tests vidéo + LOA / LLD." },
+    ],
+  },
+  {
+    slug: "livres",
+    title: "Livres Enfants",
+    desc: "Des livres illustrés où le métier du papa est le super-pouvoir. 12 métiers prévus.",
+    services: [
+      { name: "Livres Enfants RePère", to: "/services/livres-enfants", desc: "14,90€ — ou inclus box Fondateur." },
+    ],
+  },
+  {
+    slug: "affiliation",
+    title: "Affiliation & Services Pratiques",
+    desc: "Mutuelle, patrimoine, crédit, avocat, bilan santé. Mise en relation avec des partenaires agréés.",
+    services: [
+      { name: "Services Pratiques", to: "/services/services-pratiques", desc: "Mutuelle, CGP, crédit, avocat…" },
+    ],
+  },
+  {
+    slug: "gains",
+    title: "Gains, Tirage & Parrainage",
+    desc: "Grand Prix mensuel 35 000€. Gains hebdo. Parrainage 3 niveaux.",
+    services: [
+      { name: "Tirage & Parrainage", to: "/services/tirage-parrainage", desc: "35K€/mois + 15€/5€/3% parrainage." },
     ],
   },
 ];
