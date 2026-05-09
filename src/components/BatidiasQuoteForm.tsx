@@ -1,7 +1,9 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import saintCloud from "@/assets/batidias-saint-cloud.jpg";
 import paris8 from "@/assets/batidias-paris8.jpg";
 import logo from "@/assets/batidias-logo.jpg";
+import { EMAILJS_CONFIG, isEmailJsConfigured } from "@/lib/emailjs-config";
 
 const projectTypes = [
   "Rénovation complète appartement",
@@ -54,6 +56,8 @@ const clientTypes = [
 
 export function BatidiasQuoteForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   if (submitted) {
     return (
@@ -200,9 +204,48 @@ export function BatidiasQuoteForm() {
           </p>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSubmitted(true);
+              setErrorMsg(null);
+              if (!isEmailJsConfigured()) {
+                setErrorMsg("Configuration email manquante. Contactez-nous au 06 58 58 45 64.");
+                return;
+              }
+              setSending(true);
+              const fd = new FormData(e.currentTarget);
+              const params: Record<string, string> = {
+                client_type: String(fd.get("clientType") || ""),
+                nom: String(fd.get("nom") || ""),
+                telephone: String(fd.get("telephone") || ""),
+                email: String(fd.get("email") || ""),
+                societe: String(fd.get("societe") || ""),
+                departement: String(fd.get("departement") || ""),
+                ville: String(fd.get("ville") || ""),
+                type_projet: String(fd.get("typeProjet") || ""),
+                surface: String(fd.get("surface") || ""),
+                budget: String(fd.get("budget") || ""),
+                delai: String(fd.get("delai") || ""),
+                description: String(fd.get("description") || ""),
+                disponibilites: String(fd.get("description") || ""),
+                to_email: EMAILJS_CONFIG.TEAM_EMAIL,
+                reply_to: String(fd.get("email") || ""),
+              };
+              try {
+                await emailjs.send(
+                  EMAILJS_CONFIG.SERVICE_ID,
+                  EMAILJS_CONFIG.TEMPLATE_TEAM_ID,
+                  params,
+                  { publicKey: EMAILJS_CONFIG.PUBLIC_KEY }
+                );
+                setSubmitted(true);
+              } catch (err: any) {
+                console.error("EmailJS error:", err);
+                setErrorMsg(
+                  `Erreur d'envoi : ${err?.text || err?.message || "réessayez ou appelez le 06 58 58 45 64."}`
+                );
+              } finally {
+                setSending(false);
+              }
             }}
             className="space-y-6"
           >
@@ -223,19 +266,19 @@ export function BatidiasQuoteForm() {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Nom & Prénom *</label>
-                <input required type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="nom" required type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Téléphone *</label>
-                <input required type="tel" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="telephone" required type="tel" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Email *</label>
-                <input required type="email" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="email" required type="email" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Société (si pro)</label>
-                <input type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="societe" type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
             </div>
 
@@ -243,21 +286,21 @@ export function BatidiasQuoteForm() {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Département *</label>
-                <select required className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
+                <select name="departement" required className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
                   <option value="">Sélectionner…</option>
                   {departements.map((d) => <option key={d}>{d}</option>)}
                 </select>
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Ville / Code postal *</label>
-                <input required type="text" placeholder="Ex : Paris 14e — 75014" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="ville" required type="text" placeholder="Ex : Paris 14e — 75014" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
             </div>
 
             {/* Type de projet */}
             <div>
               <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Type de projet *</label>
-              <select required className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
+              <select name="typeProjet" required className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
                 <option value="">Sélectionner…</option>
                 {projectTypes.map((t) => <option key={t}>{t}</option>)}
               </select>
@@ -267,18 +310,18 @@ export function BatidiasQuoteForm() {
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Surface (m²)</label>
-                <input type="number" min="1" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
+                <input name="surface" type="number" min="1" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none" />
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Budget estimé</label>
-                <select className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
+                <select name="budget" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
                   <option value="">—</option>
                   {budgets.map((b) => <option key={b}>{b}</option>)}
                 </select>
               </div>
               <div>
                 <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Délai souhaité</label>
-                <select className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
+                <select name="delai" className="w-full bg-background border border-border px-4 py-3 focus:border-rust outline-none">
                   <option value="">—</option>
                   {timelines.map((t) => <option key={t}>{t}</option>)}
                 </select>
@@ -289,6 +332,7 @@ export function BatidiasQuoteForm() {
             <div>
               <label className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Décrivez votre projet *</label>
               <textarea
+                name="description"
                 required
                 rows={5}
                 placeholder="État actuel, ce que vous voulez, contraintes, étage, ascenseur, accès, copropriété…"
@@ -302,12 +346,20 @@ export function BatidiasQuoteForm() {
               <span>J'accepte d'être recontacté par BATIDIAS dans le cadre de ma demande de devis. Données utilisées uniquement pour ce devis.</span>
             </label>
 
+            {errorMsg && (
+              <div className="border border-rust bg-rust/10 text-foreground p-4 text-sm">
+                {errorMsg}
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full md:w-auto px-8 py-4 bg-rust text-primary-foreground font-bold uppercase tracking-widest hover:opacity-90 transition"
+              disabled={sending}
+              className="w-full md:w-auto px-8 py-4 bg-rust text-primary-foreground font-bold uppercase tracking-widest hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Envoyer ma demande de devis
+              {sending ? "Envoi en cours…" : "Envoyer ma demande de devis"}
             </button>
+
 
             <div className="text-xs text-muted-foreground pt-4 border-t border-border">
               BATIDIAS — RCS Nanterre 980 385 017 00010 · TVA FR21980385017 · Code NAF 4322A · Décennale & RC Pro MAAF (15 M€) · 06 58 58 45 64 · batidiasgestion@gmail.com
