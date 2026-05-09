@@ -12,10 +12,10 @@
  * mais la demande est quand même sauvegardée en base.
  */
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: "REPLACE_SERVICE_ID",
-  TEMPLATE_TEAM_ID: "REPLACE_TEMPLATE_TEAM_ID",
-  TEMPLATE_CLIENT_ID: "REPLACE_TEMPLATE_CLIENT_ID",
-  PUBLIC_KEY: "REPLACE_PUBLIC_KEY",
+  SERVICE_ID: "service_BATIDIAS",
+  TEMPLATE_TEAM_ID: "BATIDIAS_EMAIL",
+  TEMPLATE_CLIENT_ID: "BATIDIAS_EMAIL",
+  PUBLIC_KEY: "OoO117nkipohk9Y-4uo9K",
   TEAM_EMAIL: "batidiasgestion@hotmail.com",
 } as const;
 
