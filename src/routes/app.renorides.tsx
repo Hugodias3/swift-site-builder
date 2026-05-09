@@ -130,6 +130,7 @@ function RenoRidesApp() {
                   eventHandlers={{
                     click: (e: any) => {
                       e.originalEvent?.stopPropagation?.();
+                      lastMarkerClickAt.current = Date.now();
                       if (a.status === "off") return;
                       if (!IS_MEMBER && !accessGranted) { setShowAccess(true); return; }
                       if (selectedId && selectedId !== a.id) {
