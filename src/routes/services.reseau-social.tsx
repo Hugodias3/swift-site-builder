@@ -39,7 +39,20 @@ export const Route = createFileRoute("/services/reseau-social")({
         { q: "Comment vous évitez la toxicité ?", a: "Identité vérifiée + modération humaine + bannissement immédiat sur signalement validé. Trois strikes = exclusion à vie." },
       ]}
       next={{ label: "Les Loups", to: "/services/les-loups" }}
-    />
+    >
+      <section className="py-16 border-b border-border bg-rust/5">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="text-xs uppercase tracking-[0.3em] text-rust mb-3">Le réseau est en ligne</div>
+          <h2 className="font-display text-4xl md:text-5xl uppercase mb-6">Entre directement dans le fil.</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Crée ton compte ou connecte-toi en 30 secondes. Poste, réagis, suis tes hashtags (#couple #psg #soirée…), retrouve d'autres pères près de chez toi.
+          </p>
+          <Link to="/social" className="inline-block px-10 py-4 bg-rust text-primary-foreground font-bold uppercase tracking-widest hover:opacity-90 transition">
+            Entrer dans le réseau →
+          </Link>
+        </div>
+      </section>
+    </ServicePage>
   ),
   head: () => ({ meta: [{ title: "Réseau Social — RePère" }, { name: "description", content: "Le seul fil social pensé pour les pères actifs." }] }),
 });
