@@ -42,6 +42,7 @@ import { Route as ServicesBarbiersRouteImport } from './routes/services.barbiers
 import { Route as ServicesAutoMotoRouteImport } from './routes/services.auto-moto'
 import { Route as ServicesArtsMartiauxRouteImport } from './routes/services.arts-martiaux'
 import { Route as ServicesAideDevoirsRouteImport } from './routes/services.aide-devoirs'
+import { Route as AppRenoridesRouteImport } from './routes/app.renorides'
 import { Route as AuthenticatedSocialRouteImport } from './routes/_authenticated/social'
 import { Route as AuthenticatedSocialIndexRouteImport } from './routes/_authenticated/social.index'
 import { Route as AuthenticatedSocialMessagesRouteImport } from './routes/_authenticated/social.messages'
@@ -217,6 +218,11 @@ const ServicesAideDevoirsRoute = ServicesAideDevoirsRouteImport.update({
   path: '/aide-devoirs',
   getParentRoute: () => ServicesRoute,
 } as any)
+const AppRenoridesRoute = AppRenoridesRouteImport.update({
+  id: '/app/renorides',
+  path: '/app/renorides',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSocialRoute = AuthenticatedSocialRouteImport.update({
   id: '/social',
   path: '/social',
@@ -270,6 +276,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/social': typeof AuthenticatedSocialRouteWithChildren
+  '/app/renorides': typeof AppRenoridesRoute
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
   '/services/auto-moto': typeof ServicesAutoMotoRoute
@@ -311,6 +318,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
+  '/app/renorides': typeof AppRenoridesRoute
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
   '/services/auto-moto': typeof ServicesAutoMotoRoute
@@ -355,6 +363,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRouteWithChildren
   '/_authenticated/social': typeof AuthenticatedSocialRouteWithChildren
+  '/app/renorides': typeof AppRenoridesRoute
   '/services/aide-devoirs': typeof ServicesAideDevoirsRoute
   '/services/arts-martiaux': typeof ServicesArtsMartiauxRoute
   '/services/auto-moto': typeof ServicesAutoMotoRoute
@@ -399,6 +408,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/services'
     | '/social'
+    | '/app/renorides'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
     | '/services/auto-moto'
@@ -440,6 +450,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/services'
+    | '/app/renorides'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
     | '/services/auto-moto'
@@ -483,6 +494,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/services'
     | '/_authenticated/social'
+    | '/app/renorides'
     | '/services/aide-devoirs'
     | '/services/arts-martiaux'
     | '/services/auto-moto'
@@ -526,6 +538,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRouteWithChildren
+  AppRenoridesRoute: typeof AppRenoridesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -761,6 +774,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesAideDevoirsRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/app/renorides': {
+      id: '/app/renorides'
+      path: '/app/renorides'
+      fullPath: '/app/renorides'
+      preLoaderRoute: typeof AppRenoridesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/social': {
       id: '/_authenticated/social'
       path: '/social'
@@ -927,6 +947,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRouteWithChildren,
+  AppRenoridesRoute: AppRenoridesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
