@@ -351,7 +351,14 @@ function RenoRidesApp() {
       )}
     </main>
     {!selected && <BottomNav />}
-    <NonMemberModal open={showAccess} onClose={() => setShowAccess(false)} />
+    <NonMemberModal
+      open={showAccess}
+      onClose={() => setShowAccess(false)}
+      onGrant={() => {
+        setAccessGranted(true);
+        try { sessionStorage.setItem("renorides_access", "1"); } catch {}
+      }}
+    />
     </>
   );
 }
