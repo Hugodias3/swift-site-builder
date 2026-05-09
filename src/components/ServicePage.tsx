@@ -83,6 +83,8 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
+      {p.children}
+
       {/* HOW IT WORKS */}
       {p.howItWorks && p.howItWorks.length > 0 && (
         <section className="py-24 border-b border-border">
@@ -166,8 +168,6 @@ export function ServicePage(p: ServicePageProps) {
           </div>
         </section>
       )}
-
-      {p.children}
 
       {/* FAQ */}
       {p.faq && p.faq.length > 0 && (
