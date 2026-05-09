@@ -201,10 +201,23 @@ function RenoRidesApp() {
                 <Map.Marker
                   key={a.id}
                   position={[a.lat, a.lng]}
+                  eventHandlers={{
+                    click: (e: any) => {
+                      e.originalEvent?.stopPropagation?.();
+                      if (a.status === "off") return;
+                      if (selectedId && selectedId !== a.id) {
+                        setSelectedId(null);
+                        setExpanded(false);
+                        setTimeout(() => setSelectedId(a.id), 180);
+                      } else {
+                        setSelectedId(a.id);
+                      }
+                    },
+                  }}
                   icon={Map.L.divIcon({
                     className: "",
                     html: `<div style="position:relative;opacity:${dim};display:flex;flex-direction:column;align-items:center">
-                      <div style="width:40px;height:40px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid #0D0F12;box-shadow:0 4px 12px rgba(0,0,0,0.6)">${a.emoji}</div>
+                      <div style="width:40px;height:40px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid ${selectedId === a.id ? "#C8521A" : "#0D0F12"};box-shadow:0 4px 12px rgba(0,0,0,0.6);transition:all .2s">${a.emoji}</div>
                       <div style="margin-top:4px;background:rgba(13,15,18,0.95);color:#EDF0F5;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px;white-space:nowrap;border:1px solid rgba(255,255,255,0.08)">${a.eta}</div>
                     </div>`,
                     iconSize: [44, 60],
@@ -213,6 +226,7 @@ function RenoRidesApp() {
                 />
               );
             })}
+            <MapClickCloser onClick={() => { setSelectedId(null); setExpanded(false); }} useMapEvents={Map.useMapEvents} />
           </Map.MapContainer>
         )}
         {!Map && (
