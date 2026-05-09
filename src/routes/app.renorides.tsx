@@ -130,7 +130,7 @@ function RenoRidesApp() {
                     click: (e: any) => {
                       e.originalEvent?.stopPropagation?.();
                       if (a.status === "off") return;
-                      if (!IS_MEMBER) { setShowAccess(true); return; }
+                      if (!IS_MEMBER && !accessGranted) { setShowAccess(true); return; }
                       if (selectedId && selectedId !== a.id) {
                         setSelectedId(null);
                         setExpanded(false);
