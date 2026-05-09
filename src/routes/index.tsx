@@ -1,7 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-
+{/* BARRE URGENCE */}
+<div className="bg-rust text-primary-foreground py-2 overflow-hidden">
+  <div className="flex gap-12 whitespace-nowrap animate-marquee">
+    {[
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+      "🤫 4 287 secrets déposés cette semaine",
+      "⚽ Tournoi padel complet en 48h · 32 pères inscrits",
+      "🏗️ Devis BATIDIAS reçu en 36h · Rénovation cuisine",
+      "💪 Des milliers de pères nous ont rejoints · Rejoins-les",
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+      "🤫 4 287 secrets déposés cette semaine",
+      "⚽ Tournoi padel complet en 48h · 32 pères inscrits",
+    ].map((text, i) => (
+      <span key={i} className="text-sm font-medium">{text}</span>
+    ))}
+  </div>
+</div>
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
@@ -96,7 +114,47 @@ function Index() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <SiteHeader />
-
+      <div className="bg-rust text-primary-foreground py-2 overflow-hidden">
+  <div className="flex gap-12 whitespace-nowrap animate-marquee">
+    {[
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+      "🤫 4 287 secrets déposés cette semaine",
+      "⚽ Tournoi padel complet en 48h · 32 pères inscrits",
+      "🏗️ Devis BATIDIAS reçu en 36h · Rénovation cuisine",
+      "💪 Des milliers de pères nous ont rejoints · Rejoins-les",
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+    ].map((text, i) => (
+      <span key={i} className="text-sm font-medium">{text}</span>
+    ))}
+  </div>
+</div>@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+{/* BARRE URGENCE */}
+<div className="bg-rust text-primary-foreground py-2 overflow-hidden">
+  <div className="flex gap-12 whitespace-nowrap animate-marquee">
+    {[
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+      "🤫 4 287 secrets déposés cette semaine",
+      "⚽ Tournoi padel complet en 48h · 32 pères inscrits",
+      "🏗️ Devis BATIDIAS reçu en 36h · Rénovation cuisine",
+      "💪 Des milliers de pères nous ont rejoints · Rejoins-les",
+      "🚨 Michel P. a trouvé un plombier en 6 min · Paris 10ème",
+      "👶 Sophie M. disponible maintenant · Garde flash acceptée",
+      "🤫 4 287 secrets déposés cette semaine",
+      "⚽ Tournoi padel complet en 48h · 32 pères inscrits",
+    ].map((text, i) => (
+      <span key={i} className="text-sm font-medium">{text}</span>
+    ))}
+  </div>
+</div>
       {/* HERO */}
       <section id="top" className="relative grain min-h-screen flex items-center pt-24 pb-16">
         <div
@@ -133,11 +191,24 @@ function Index() {
                 Rejoindre le mouvement
               </a>
               <a
-                href="#manifeste"
-                className="px-8 py-4 border border-foreground/30 font-bold uppercase tracking-widest hover:border-rust hover:text-rust transition"
-              >
-                Lire le manifeste
-              </a>
+                href="#services"
+  className="px-8 py-4 border border-foreground/30 font-bold uppercase tracking-widest hover:border-rust hover:text-rust transition"
+>
+  Découvrir les 34 services →
+</a><div className="mt-8 flex flex-wrap gap-6 text-sm text-muted-foreground">
+<div className="mt-8 flex flex-wrap gap-4 text-sm text-muted-foreground">
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🚨 Urgences & Artisans</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">👶 Garde d'enfants flash</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🤫 Confessionnal anonyme</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">⚽ Sport & Soirées entre pères</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🥊 Espace Défense</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🏗️ Devis travaux gratuit</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🧴 Beauté & Capillaire</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🎙️ Podcast hebdo</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">📚 Livres enfants</span>
+  <span className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-full hover:border-rust hover:text-rust transition cursor-pointer">🚙 Auto & Moto</span>
+</div>
+</div>
             </div>
           </div>
 
@@ -160,7 +231,46 @@ function Index() {
           On le devient ensemble ↓
         </div>
       </section>
+{/* COMMENT ÇA MARCHE */}
+<section className="relative py-32 border-t border-border">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-xs uppercase tracking-[0.3em] text-rust mb-6">02 — Simple</div>
+    <h2 className="font-display text-5xl md:text-7xl uppercase leading-[0.95] mb-4">
+      Comment ça<br />
+      <span className="text-rust">marche ?</span>
+    </h2>
+    <p className="text-muted-foreground max-w-xl mb-16">
+      3 étapes. 30 secondes. Et tu rejoins la communauté des pères qui avancent ensemble.
+    </p>
 
+    <div className="grid md:grid-cols-3 gap-px bg-border">
+      <div className="bg-background p-10 group hover:bg-card transition">
+        <div className="font-display text-6xl text-rust mb-6">01</div>
+        <h3 className="font-display text-2xl uppercase mb-4">Tu t'inscris</h3>
+        <p className="text-muted-foreground leading-relaxed">
+          30 secondes. Email + prénom. C'est tout. Accès immédiat à la communauté et aux services gratuits.
+        </p>
+        <div className="mt-6 text-xs uppercase tracking-widest text-rust">Gratuit pour toujours →</div>
+      </div>
+      <div className="bg-background p-10 group hover:bg-card transition">
+        <div className="font-display text-6xl text-rust mb-6">02</div>
+        <h3 className="font-display text-2xl uppercase mb-4">Tu explores</h3>
+        <p className="text-muted-foreground leading-relaxed">
+          34 services à portée de main. Urgence plomberie, garde d'enfants, podcast, sport, secrets anonymes. Tout est là.
+        </p>
+        <div className="mt-6 text-xs uppercase tracking-widest text-rust">34 services →</div>
+      </div>
+      <div className="bg-background p-10 group hover:bg-card transition">
+        <div className="font-display text-6xl text-rust mb-6">03</div>
+        <h3 className="font-display text-2xl uppercase mb-4">Tu deviens père</h3>
+        <p className="text-muted-foreground leading-relaxed">
+          Des milliers de pères qui apprennent, s'entraident, se défendent et grandissent ensemble. Tu n'es plus seul.
+        </p>
+        <div className="mt-6 text-xs uppercase tracking-widest text-rust">Rejoindre →</div>
+      </div>
+    </div>
+  </div>
+</section>
       {/* MANIFESTE */}
       <section id="manifeste" className="relative py-32 border-t border-border">
         <div className="max-w-5xl mx-auto px-6">
@@ -281,7 +391,60 @@ function Index() {
           </div>
         </div>
       </section>
+{/* TÉMOIGNAGES */}
+<section className="relative py-32 border-t border-border bg-card/30">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-xs uppercase tracking-[0.3em] text-rust mb-6">05 — Ils en sont</div>
+    <h2 className="font-display text-5xl md:text-7xl uppercase leading-[0.95] mb-16">
+      Ce que disent<br />
+      <span className="text-rust">les pères.</span>
+    </h2>
 
+    <div className="grid md:grid-cols-3 gap-6">
+      <div className="border border-border p-8 bg-background hover:border-rust transition">
+        <div className="flex gap-1 text-rust mb-6">★★★★★</div>
+        <p className="text-lg leading-relaxed mb-8">
+          "Fuite d'eau un dimanche soir à 21h. En 8 minutes j'avais un plombier vérifié en route. Ma femme n'en revenait pas."
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-rust/20 border border-rust/30 flex items-center justify-center text-rust font-bold">T</div>
+          <div>
+            <div className="font-bold text-sm">Thomas M.</div>
+            <div className="text-xs text-muted-foreground">Père de 2 enfants · Paris 11ème</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border border-rust bg-rust/5 p-8">
+        <div className="flex gap-1 text-rust mb-6">★★★★★</div>
+        <p className="text-lg leading-relaxed mb-8">
+          "Les Secrets c'est le truc le plus honnête que j'ai trouvé pour les pères. J'ai déposé un secret à 3h du matin. 400 réactions. Je me suis senti moins seul."
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-rust/20 border border-rust/30 flex items-center justify-center text-rust font-bold">K</div>
+          <div>
+            <div className="font-bold text-sm">Kévin D.</div>
+            <div className="text-xs text-muted-foreground">Père solo · Lyon</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border border-border p-8 bg-background hover:border-rust transition">
+        <div className="flex gap-1 text-rust mb-6">★★★★★</div>
+        <p className="text-lg leading-relaxed mb-8">
+          "Le tournoi padel du mois avec 31 autres pères. On s'est retrouvés après pour manger. J'ai plus de contacts WhatsApp de pères que depuis des années."
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-rust/20 border border-rust/30 flex items-center justify-center text-rust font-bold">S</div>
+          <div>
+            <div className="font-bold text-sm">Sébastien L.</div>
+            <div className="text-xs text-muted-foreground">Père de 3 enfants · Bordeaux</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       {/* WAITLIST */}
       <section id="waitlist" className="relative py-32 border-t border-border bg-card/30 grain">
         <div className="max-w-3xl mx-auto px-6 text-center relative">
@@ -331,7 +494,55 @@ function Index() {
           </p>
         </div>
       </section>
+{/* FAQ */}
+<section className="relative py-32 border-t border-border">
+  <div className="max-w-3xl mx-auto px-6">
+    <div className="text-xs uppercase tracking-[0.3em] text-rust mb-6">06 — Questions</div>
+    <h2 className="font-display text-5xl md:text-6xl uppercase leading-[0.95] mb-16">
+      Les vraies<br />
+      <span className="text-rust">questions.</span>
+    </h2>
 
+    <div className="space-y-0">
+      {[
+        {
+          q: "C'est vraiment gratuit pour commencer ?",
+          a: "Oui. Le plan Père Connecté est et restera toujours gratuit. Tu accèdes à la communauté, aux discussions et tu peux déposer 1 secret par mois. Sans carte bancaire."
+        },
+        {
+          q: "C'est pour quel type de père ?",
+          a: "Tous les pères actifs de 25 à 55 ans. Nouveau père, père solo, père en garde partagée, père d'ados. Si tu es père et que tu veux avancer — RePère est pour toi."
+        },
+        {
+          q: "Les artisans sont vraiment vérifiés ?",
+          a: "Oui. Chaque artisan fournit son KBIS, son assurance RC Pro et ses certifications métier. Notre équipe vérifie manuellement avant qu'il apparaisse sur la carte."
+        },
+        {
+          q: "C'est disponible partout en France ?",
+          a: "Les services digitaux (communauté, podcast, secrets, formation) sont disponibles partout. Les services géolocalisés (artisans, garde, events) démarrent en Île-de-France et s'étendent progressivement."
+        },
+        {
+          q: "Je peux annuler quand je veux ?",
+          a: "Oui. Sans engagement, sans frais, sans justification. Tu annules depuis l'app en 2 clics."
+        },
+        {
+          q: "Quand l'app sort ?",
+          a: "Le MVP sort pour les 500 premiers inscrits sur la liste d'attente. Inscris-toi maintenant pour être parmi les premiers et garder ton tarif Fondateur à vie."
+        },
+      ].map((item, i) => (
+        <details key={i} className="group border-t border-border py-6 cursor-pointer">
+          <summary className="flex items-center justify-between font-bold text-lg uppercase tracking-wide list-none">
+            {item.q}
+            <span className="text-rust text-2xl group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            {item.a}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
       <SiteFooter />
     </main>
   );
