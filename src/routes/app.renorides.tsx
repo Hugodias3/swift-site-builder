@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { Z } from "@/lib/z";
 
 export const Route = createFileRoute("/app/renorides")({
   component: RenoRidesApp,
@@ -338,7 +339,7 @@ function RenoRidesApp() {
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 1150,
+              zIndex: Z.sheetBackdrop,
               background: "rgba(7,8,10,0.55)",
               backdropFilter: "blur(2px)",
               WebkitBackdropFilter: "blur(2px)",
@@ -444,7 +445,7 @@ function BottomSheet({
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 1200,
+        zIndex: Z.bottomSheet,
         height: `${heightVh}vh`,
         transform: `translateY(${dragOffset}px)`,
         background: "#0D0F12",
