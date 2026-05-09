@@ -31,14 +31,55 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { cat: "Urgences & Maison", items: ["RenoRides Urgence", "Garde Flash", "BATIDIAS", "BATIRENOV"] },
-  { cat: "Communauté", items: ["Réseau social", "Les Loups", "Classe Scolaire", "Espace Foi", "Entraide", "Finance"] },
-  { cat: "Les Secrets", items: ["Confessionnal anonyme", "500 caractères", "6 réactions", "Modération IA"] },
-  { cat: "Sport & Soirées", items: ["12 sports", "Tournoi mensuel", "Gaming Night", "Whisky & Cigares", "Poker"] },
-  { cat: "Espace Défense", items: ["MMA · JJB · Boxe", "Stands de tir", "Cadre légal", "Juriste partenaire"] },
-  { cat: "Beauté & Capillaire", items: ["Beauté IA Soin", "Barbiers partenaires", "Greffe & micropigmentation"] },
-  { cat: "Contenu & Formation", items: ["Podcast hebdo", "Formation IA Qualiopi", "Aide aux devoirs IA", "Masterclass"] },
-  { cat: "Auto & Moto", items: ["Le test du père", "LOA / LLD", "Tests vidéo SUV famille"] },
+  { cat: "Urgences & Maison", items: [
+    { name: "RenoRides Urgence", to: "/services/renorides" },
+    { name: "Garde Flash", to: "/services/garde-flash" },
+    { name: "BATIDIAS", to: "/services/batidias" },
+    { name: "BATIRENOV", to: "/services/batirenov" },
+  ]},
+  { cat: "Communauté", items: [
+    { name: "Réseau social", to: "/services/reseau-social" },
+    { name: "Les Loups", to: "/services/les-loups" },
+    { name: "Classe Scolaire", to: "/services/classe-scolaire" },
+    { name: "Espace Foi", to: "/services/espace-foi" },
+    { name: "Entraide", to: "/services/entraide-urgence" },
+    { name: "Finance", to: "/services/finance" },
+  ]},
+  { cat: "Les Secrets", items: [
+    { name: "Confessionnal anonyme", to: "/services/secrets" },
+    { name: "500 caractères", to: "/services/secrets" },
+    { name: "6 réactions", to: "/services/secrets" },
+    { name: "Modération IA", to: "/services/secrets" },
+  ]},
+  { cat: "Sport & Soirées", items: [
+    { name: "12 sports", to: "/services/sports" },
+    { name: "Tournoi mensuel", to: "/services/tournoi-mensuel" },
+    { name: "Gaming Night", to: "/services/soirees" },
+    { name: "Whisky & Cigares", to: "/services/soirees" },
+    { name: "Poker", to: "/services/soirees" },
+  ]},
+  { cat: "Espace Défense", items: [
+    { name: "MMA · JJB · Boxe", to: "/services/arts-martiaux" },
+    { name: "Stands de tir", to: "/services/stand-tir" },
+    { name: "Cadre légal", to: "/services/cadre-legal" },
+    { name: "Juriste partenaire", to: "/services/cadre-legal" },
+  ]},
+  { cat: "Beauté & Capillaire", items: [
+    { name: "Beauté IA Soin", to: "/services/beaute-ia" },
+    { name: "Barbiers partenaires", to: "/services/barbiers" },
+    { name: "Greffe & micropigmentation", to: "/services/capillaire" },
+  ]},
+  { cat: "Contenu & Formation", items: [
+    { name: "Podcast hebdo", to: "/services/podcast" },
+    { name: "Formation IA Qualiopi", to: "/services/formation-ia" },
+    { name: "Aide aux devoirs IA", to: "/services/aide-devoirs" },
+    { name: "Masterclass", to: "/services/masterclass" },
+  ]},
+  { cat: "Auto & Moto", items: [
+    { name: "Le test du père", to: "/services/auto-moto" },
+    { name: "LOA / LLD", to: "/services/auto-moto" },
+    { name: "Tests vidéo SUV famille", to: "/services/auto-moto" },
+  ]},
 ];
 
 const tiers = [
