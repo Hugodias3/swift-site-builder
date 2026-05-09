@@ -394,22 +394,21 @@ function BottomSheet({
   };
 
   return (
-    <div className="absolute inset-0 z-30 pointer-events-none">
-      <div
-        className="absolute inset-x-0 bottom-0 pointer-events-auto flex flex-col"
-        style={{
-          height: `${heightVh}vh`,
-          transform: `translateY(${dragOffset}px)`,
-          background: "#0D0F12",
-          borderTop: "1px solid rgba(255,255,255,0.1)",
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
-          transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
-          animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
-        }}
-      >
-        <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 pointer-events-auto flex flex-col"
+      style={{
+        height: `${heightVh}vh`,
+        transform: `translateY(${dragOffset}px)`,
+        background: "#0D0F12",
+        borderTop: "1px solid rgba(255,255,255,0.1)",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        boxShadow: "0 -20px 60px rgba(0,0,0,0.5)",
+        transition: dragOffset === 0 ? "transform 0.32s cubic-bezier(0.32,0.72,0,1), height 0.32s cubic-bezier(0.32,0.72,0,1)" : "none",
+        animation: "sheet-up 0.32s cubic-bezier(0.32,0.72,0,1)",
+      }}
+    >
+      <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
 
         <div
           className="pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing touch-none"
