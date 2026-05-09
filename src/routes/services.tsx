@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/services")({
@@ -129,6 +129,12 @@ const categories = [
 ];
 
 function ServicesIndex() {
+  const location = useLocation();
+
+  if (location.pathname !== "/services") {
+    return <Outlet />;
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SiteHeader />
